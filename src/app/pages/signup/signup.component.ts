@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +18,7 @@ export class SignupComponent implements OnInit{
     phone: ''
   };
 
-  constructor(private userService: UserService){
+  constructor(private userService: UserService, private snack: MatSnackBar){
 
   }
 
@@ -28,7 +29,11 @@ export class SignupComponent implements OnInit{
   formSubmit(){
     console.log(this.user);
     if(this.user.username == null || this.user.username == ''){
-      alert('O username é requerido');
+      this.snack.open('Nome do usuário é requerido', 'Fechar',{
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right'
+      });
       return;
     }
 
@@ -37,7 +42,11 @@ export class SignupComponent implements OnInit{
       alert('Usuário cadastrado com sucesso');
     }, (error) => {
       console.log(error);
-      alert('Sistema ocorreu um erro');
+      this.snack.open('Ocorreu um erro do sistema', 'Fechar',{
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right'
+      });
     });
   }
 
