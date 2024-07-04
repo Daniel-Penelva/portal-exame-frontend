@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -39,7 +40,7 @@ export class SignupComponent implements OnInit{
 
     this.userService.cadastrarUsuario(this.user).subscribe((data) => {
       console.log(data);
-      alert('Usuário cadastrado com sucesso');
+      Swal.fire('Usuário cadastrado', 'Usuário cadastrado com sucesso','success');
     }, (error) => {
       console.log(error);
       this.snack.open('Ocorreu um erro do sistema', 'Fechar',{
