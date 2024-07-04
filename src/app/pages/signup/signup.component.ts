@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit{
 
   }
 
-  forSubmit(){
+  formSubmit(){
     console.log(this.user);
     if(this.user.username == null || this.user.username == ''){
       alert('O username é requerido');
