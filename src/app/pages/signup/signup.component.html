@@ -6,35 +6,35 @@
           <img src="../../../assets/icon.png" alt="registrar user" width="100" height="100"/>
         </div>
         <h1 class="text-center">Registrar aqui</h1>
-        <form (ngSubmit)="formSubmit()">
+        <form (ngSubmit)="formSubmit()" #userForm = "ngForm">
           <mat-form-field class="full-width" appearance="outline">   <!-- Angular Material: Para utilizar "mat-form-field" tem que importar o MatFormFieldModule no app.module.ts -->
             <mat-label>Username do usuário</mat-label>
-            <input matInput [(ngModel)]="user.username" name="username" placeholder="Digite seu username">   <!-- Angular Material: Para utilizar "input matInput" tem que importar o MatInputModule no app.module.ts -->
+            <input matInput [(ngModel)]="user.username" name="username" required placeholder="Digite seu username">   <!-- Angular Material: Para utilizar "input matInput" tem que importar o MatInputModule no app.module.ts -->
             <mat-hint>O username deve ser único</mat-hint>
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Senha do usuário</mat-label>
-            <input type="password" matInput [(ngModel)]="user.password" name="password" placeholder="Digite sua senha">
+            <input type="password" matInput [(ngModel)]="user.password" name="password" required  placeholder="Digite sua senha">
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Nome do usuário</mat-label>
-            <input matInput [(ngModel)]="user.firstname" name="firstname" placeholder="Digite seu nome">
+            <input matInput [(ngModel)]="user.firstname" name="firstname" required placeholder="Digite seu nome">
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Sobrenome do usuário</mat-label>
-            <input matInput [(ngModel)]="user.lastname" name="lastname" placeholder="Digite seu sobrenome">
+            <input matInput [(ngModel)]="user.lastname" name="lastname" required placeholder="Digite seu sobrenome">
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Email do usuário</mat-label>
-            <input matInput [(ngModel)]="user.email" name="email" placeholder="Digite seu email">
+            <input matInput [(ngModel)]="user.email" name="email" required placeholder="Digite seu email">
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Telefone do usuário</mat-label>
-            <input matInput [(ngModel)]="user.phone" name="phone" placeholder="Digite seu telefone">
+            <input matInput [(ngModel)]="user.phone" name="phone" required placeholder="Digite seu telefone">
           </mat-form-field>
           <div class="container text-center">
             <button mat-raised-button color="primary">Registrar</button>  <!-- Angular Material: Para utilizar "button mat-raised-button" tem que importar o MatButtonModule no app.module.ts -->
-            <button style="margin-left: 20px;" mat-raised-button color="accent">Limpar</button>
+            <button type="reset" style="margin-left: 20px;" mat-raised-button color="accent">Limpar</button>
           </div>
         </form>
         <br><br><br>
