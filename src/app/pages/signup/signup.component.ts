@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -10,45 +11,70 @@ import Swal from 'sweetalert2';
 })
 export class SignupComponent implements OnInit{
 
+  /*
   public user = {
     username:'',
     password: '',
     firstname: '',
     lastname: '',
     email: '',
-    phone: ''
-  };
+    phone: '',
+  };*/
+
+  form = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]),
+    firstname: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    lastname: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    phone: new FormControl('', [Validators.required, this.phoneValidator])
+  });
 
   constructor(private userService: UserService, private snack: MatSnackBar){
 
   }
 
   ngOnInit(): void {
-
   }
 
-  formSubmit(){
-    console.log(this.user);
-    if(this.user.username == null || this.user.username == ''){
-      this.snack.open('Nome do usuário é requerido', 'Fechar',{
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right'
-      });
-      return;
+  formSubmit() {
+    if (this.form.valid) {
+      this.userService.cadastrarUsuario(this.form.value).subscribe(
+        (data) => {
+          console.log(data);
+          Swal.fire('Usuário cadastrado', 'Usuário cadastrado com sucesso', 'success');
+        },
+        (error) => {
+          console.log(error);
+          this.snack.open('Ocorreu um erro do sistema', 'Fechar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right'
+          });
+        }
+      );
     }
+  }
 
-    this.userService.cadastrarUsuario(this.user).subscribe((data) => {
-      console.log(data);
-      Swal.fire('Usuário cadastrado', 'Usuário cadastrado com sucesso','success');
-    }, (error) => {
-      console.log(error);
-      this.snack.open('Ocorreu um erro do sistema', 'Fechar',{
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right'
-      });
-    });
+  phoneValidator(control: FormControl): ValidationErrors | null {
+    const phoneRegex = /^\(\d{2}\)\d{5}-\d{4}$/;
+    if(!phoneRegex.test(control.value)){
+      return { phone: true };
+    }
+    return null;
   }
 
 }
+
+/* O que eu fiz no regex no método phoneValidator:
+
+^ - Início da string
+$$ - Procura por um parêntese de abertura
+\d{2} - Procura por 2 dígitos (código de área)
+$$ - Procura por um parêntese de fechamento
+\d{5} - Procura por 5 dígitos (número principal)
+- - Procura por um hífen
+\d{4} - Procura por 4 dígitos (dígitos finais)
+$ - Final da string
+
+*/
