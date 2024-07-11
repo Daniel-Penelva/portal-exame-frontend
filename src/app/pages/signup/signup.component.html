@@ -10,32 +10,22 @@
           
           <!-- Validações -->
           <div *ngIf="form.get('username')?.touched">
-            <p class="alert alert-danger" *ngIf="form.get('username')?.hasError('required')">O campo username precisa ser preenchido</p>
-            <p class="alert alert-danger" *ngIf="form.get('username')?.hasError('minlength')">O campo username precisa ter no mínimo dois caracteres</p>
-            <p class="alert alert-danger" *ngIf="form.get('username')?.hasError('maxlength')">O campo username precisa ter no máximo dez caracteres</p>
+            <p class="alert alert-danger" *ngIf="form.get('username')?.invalid">{{ getErrorMessage("username") }}</p>
           </div>
           <div *ngIf="form.get('password')?.touched">
-            <p class="alert alert-danger" *ngIf="form.get('password')?.hasError('required')">O campo password precisa ser preenchido</p>
-            <p class="alert alert-danger" *ngIf="form.get('password')?.hasError('minlength')">O campo password precisa ter no mínimo seis caracteres</p>
-            <p class="alert alert-danger" *ngIf="form.get('password')?.hasError('maxlength')">O campo password precisa ter no máximo dez caracteres</p>
+            <p class="alert alert-danger" *ngIf="form.get('password')?.invalid">{{ getErrorMessage("password") }}</p>
           </div>
           <div *ngIf="form.get('firstname')?.touched">
-            <p class="alert alert-danger" *ngIf="form.get('firstname')?.hasError('required')">O campo nome precisa ser preenchido</p>
-            <p class="alert alert-danger" *ngIf="form.get('firstname')?.hasError('minlength')">O campo nome precisa ter no mínimo três caracteres</p>
-            <p class="alert alert-danger" *ngIf="form.get('firstname')?.hasError('maxlength')">O campo nome precisa ter no máximo vinte caracteres</p>
+            <p class="alert alert-danger" *ngIf="form.get('firstname')?.invalid">{{ getErrorMessage("firstname") }}</p>
           </div>
           <div *ngIf="form.get('lastname')?.touched">
-            <p class="alert alert-danger" *ngIf="form.get('lastname')?.hasError('required')">O campo sobrenome precisa ser preenchido</p>
-            <p class="alert alert-danger" *ngIf="form.get('lastname')?.hasError('minlength')">O campo sobrenome precisa ter no mínimo três caracteres</p>
-            <p class="alert alert-danger" *ngIf="form.get('lastname')?.hasError('maxlength')">O campo sobrenome precisa ter no máximo vinte caracteres</p>
+            <p class="alert alert-danger" *ngIf="form.get('lastname')?.invalid">{{ getErrorMessage("lastname") }}</p>
           </div>
           <div *ngIf="form.get('email')?.touched">
-            <p class="alert alert-danger" *ngIf="form.get('email')?.hasError('required')">O campo email precisa ser preenchido</p>
-            <p class="alert alert-danger" *ngIf="form.get('email')?.hasError('email')">O campo email está preenchido de forma inválido</p>
+            <p class="alert alert-danger" *ngIf="form.get('email')?.invalid">{{ getErrorMessage("email") }}</p>
           </div>
           <div *ngIf="form.get('phone')?.touched">
-            <p class="alert alert-danger" *ngIf="form.get('phone')?.hasError('required')">O campo telefone precisa ser preenchido</p>
-            <p class="alert alert-danger" *ngIf="form.get('phone')?.hasError('phone')">O campo telefone está preenchido de forma inválido</p>
+            <p class="alert alert-danger" *ngIf="form.get('phone')?.invalid">{{ getErrorMessage("phone") }}</p>
           </div>
 
           <mat-form-field class="full-width" appearance="outline">   <!-- Angular Material: Para utilizar "mat-form-field" tem que importar o MatFormFieldModule no app.module.ts -->
