@@ -1,1 +1,31 @@
-<p>navbar works!</p>
+<mat-toolbar color="primary">      <!-- Angular Material: Para utilizar "mat-toolbar" tem que importar o MatToolbarModule no app.module.ts -->
+  <!-- Utilizando google icons: https://fonts.google.com/icons -->
+  <a
+    [routerLink]="'/'"
+    mat-icon-button                
+    class="example-icon"
+    arial-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu_books</mat-icon>       <!-- Angular Material: Para utilizar "mat-icon" tem que importar o MatIconModule no app.module.ts -->
+  </a>
+  <span>Portal de Exames</span>
+  <span class="example-spacer"></span>
+
+  <a
+    [routerLink]="'/login'"
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    Login
+  </a>
+
+  <a
+    [routerLink]="'/signup'"
+    mat-icon-button
+    class="example-icon favorite-icon mr20 ml70"
+    aria-label="Example icon-button with heart icon"
+  >
+    Registrar
+  </a>
+</mat-toolbar>
