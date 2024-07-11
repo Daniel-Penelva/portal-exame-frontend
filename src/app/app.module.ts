@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './pages/home/home.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     NavbarComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
