@@ -30,20 +30,24 @@
 
           <mat-form-field class="full-width" appearance="outline">   <!-- Angular Material: Para utilizar "mat-form-field" tem que importar o MatFormFieldModule no app.module.ts -->
             <mat-label>Username do usuário</mat-label>
-            <input matInput formControlName="username" name="username" placeholder="Digite seu username">   <!-- Angular Material: Para utilizar "input matInput" tem que importar o MatInputModule no app.module.ts -->
+            <input matInput formControlName="username" name="username" #usuario placeholder="Digite seu username">   <!-- Angular Material: Para utilizar "input matInput" tem que importar o MatInputModule no app.module.ts -->
             <mat-hint>O username deve ser único</mat-hint>
+            <mat-hint align="end">{{ usuario.value?.length || 0}}/20</mat-hint>
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Senha do usuário</mat-label>
-            <input type="password" matInput formControlName="password" name="password" placeholder="Digite sua senha">
+            <input type="password" matInput formControlName="password" name="password" #senha placeholder="Digite sua senha">
+            <mat-hint align="end">{{ senha.value?.length || 0}}/20</mat-hint>
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Nome do usuário</mat-label>
-            <input matInput formControlName="firstname" name="firstname" placeholder="Digite seu nome">
+            <input matInput formControlName="firstname" name="firstname" #nome placeholder="Digite seu nome">
+            <mat-hint align="end">{{ nome.value?.length || 0}}/20</mat-hint>
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Sobrenome do usuário</mat-label>
-            <input matInput formControlName="lastname" name="lastname" placeholder="Digite seu sobrenome">
+            <input matInput formControlName="lastname" name="lastname" #sobrenome placeholder="Digite seu sobrenome">
+            <mat-hint align="end">{{ sobrenome.value?.length || 0}}/20</mat-hint>
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">  
             <mat-label>Email do usuário</mat-label>
