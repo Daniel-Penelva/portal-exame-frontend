@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit{
     "password": ''
   }
 
-  constructor(){
+  constructor(private snack: MatSnackBar){
 
   }
 
@@ -21,7 +22,17 @@ export class LoginComponent implements OnInit{
   }
 
   formSubmit(){
-    console.log('Click em botão de login', `Username: ${this.loginData.username} | senha: ${this.loginData.password}`);
+    //console.log('Click em botão de login', `Username: ${this.loginData.username} | senha: ${this.loginData.password}`);
+
+    if(this.loginData.username.trim() == '' || this.loginData.username.trim() == null){
+      this.snack.open("Username requerido", 'Fechar',{duration: 3000});
+      return;
+    }
+
+    if(this.loginData.password.trim() == '' || this.loginData.password.trim() == null){
+      this.snack.open("Password requerido", 'Fechar',{duration: 3000});
+      return;
+    }
   }
 
 }
