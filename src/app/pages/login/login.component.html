@@ -6,14 +6,14 @@
                 <div class="container text-center">
                     <img src="../../../assets/login.png" alt="icone login" width="100" height="100">
                     <h1 class="text-center">Login</h1>
-                    <form action="">
+                    <form (ngSubmit)="formSubmit()">
                         <mat-form-field class="full-width" appearance="outline">   <!-- Angular Material: Para utilizar "mat-form-field" tem que importar o MatFormFieldModule no app.module.ts -->
                             <mat-label>Username do usuário</mat-label>
-                            <input matInput placeholder="Digite seu username">     <!-- Angular Material: Para utilizar "input matInput" tem que importar o MatInputModule no app.module.ts -->
+                            <input matInput [(ngModel)]="loginData.username" name="username" required placeholder="Digite seu username">     <!-- Angular Material: Para utilizar "input matInput" tem que importar o MatInputModule no app.module.ts -->
                         </mat-form-field>
                         <mat-form-field class="full-width" appearance="outline">  
                             <mat-label>Senha do usuário</mat-label>
-                            <input type="password" matInput placeholder="Digite sua senha">
+                            <input type="password" matInput [(ngModel)]="loginData.password" name="password" required placeholder="Digite sua senha">
                         </mat-form-field>
                         <br><br>
                         <div class="container text-center">
