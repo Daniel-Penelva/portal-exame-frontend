@@ -28,5 +28,12 @@ export class LoginService {
       return true;                                                     // return true indica que o usuário está logado
     }
   }
-  
+
+  // Fechar sessão e eliminar o token - remove os dados de autenticação armazenados no localStorage, o que efetivamente 'desloga' o usuário.
+  public logout(){
+    localStorage.removeItem('token');                   // remove o item associado a chave 'token' do localStorage, lembrando que o token está associado a autenticação do usuário
+    localStorage.removeItem('user');                    // remove o item chave 'user' do localStorage, aqui inclui os detalhes do username, roles, ou qualquer outro dado relevante armazenado durante a sessão
+    return true;                                        // return true para indicar que a operação de logout foi realizada com sucesso
+  }
+
 }
