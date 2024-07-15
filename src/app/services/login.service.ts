@@ -18,4 +18,15 @@ export class LoginService {
     localStorage.setItem('token', token);
   }
 
+/* método para verificar se um usuário está logado ou não - verifica a presença de um token de autenticação no localStorage. Esse método 
+  protege rotas e componentes da aplicação, garantindo que apenas usuários autenticados possam acessá-los.*/ 
+  public isLoggedIn(){
+    let tokenStr = localStorage.getItem('token');
+    if(tokenStr == undefined || tokenStr == null || tokenStr == ''){   // essas verificações garatem que o token seja considerado inválido ou ausente
+      return false;                                                    // return false indica que o usuário não está logado
+    }else{
+      return true;                                                     // return true indica que o usuário está logado
+    }
+  }
+  
 }
