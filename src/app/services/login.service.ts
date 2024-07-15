@@ -12,4 +12,10 @@ export class LoginService {
   public generateToken(loginData: any) {
     return this.http.post(`${baserUrl}/generate-token`, loginData);
   }
+
+  // método para iniciar a sessão e armazenar o token de autenticação no localStorage do navegador
+  public loginUser(token:any){
+    localStorage.setItem('token', token);
+  }
+
 }
