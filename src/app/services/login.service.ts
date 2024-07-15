@@ -36,4 +36,10 @@ export class LoginService {
     return true;                                        // return true para indicar que a operação de logout foi realizada com sucesso
   }
 
+  /* Recuperar o token JWT de autenticação armazenado no localStorage que foi recebido após o login do usuário e é necessário para autenticar 
+  futuras requisições feitas pelo usuário*/ 
+  public getToken(){
+    return localStorage.getItem('token');               // recupera o valor associado à chave 'token' do localStorage. Se achave estiver presente no localStorage, o método retorna o valor do token de autenticação. Caso contrário retorna null.
+  }
+
 }
