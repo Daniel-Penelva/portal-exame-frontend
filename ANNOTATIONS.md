@@ -198,3 +198,176 @@ public loginUser(token: any) {
   - Tokens geralmente têm um tempo de expiração. Garanta que seu aplicativo verifique a validade do token antes de utilizá-lo e que trate corretamente os tokens expirados (por exemplo, redirecionando o usuário para a tela de login).
 
 Com essas informações, você tem uma visão clara sobre o propósito e o funcionamento do método `loginUser`.
+
+---
+
+# HttpClient
+
+O `HttpClient` é um serviço do Angular que facilita a comunicação com servidores remotos por meio de solicitações HTTP. Ele está disponível no módulo `@angular/common/http` e é amplamente utilizado para fazer solicitações HTTP em aplicações Angular.
+
+### Principais Funcionalidades
+
+1. **Solicitações HTTP**:
+   - `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD`, `OPTIONS`.
+
+2. **Intercepções de Requisições e Respostas**:
+   - Permite modificar ou inspecionar solicitações e respostas HTTP antes de serem processadas.
+
+3. **Suporte a Observables**:
+   - Utiliza Observables da biblioteca RxJS para operações assíncronas.
+
+4. **Manipulação de Erros**:
+   - Fornece mecanismos para capturar e tratar erros de solicitações HTTP.
+
+5. **Configurações de Cabeçalhos e Parâmetros**:
+   - Permite adicionar cabeçalhos HTTP personalizados e parâmetros de consulta.
+
+### Importação e Configuração
+
+Para usar `HttpClient`, é necessário importar o módulo `HttpClientModule` no módulo principal da aplicação (geralmente `AppModule`).
+
+#### Passos:
+
+1. **Instalar o Módulo**:
+   ```typescript
+   import { HttpClientModule } from '@angular/common/http';
+   ```
+
+2. **Adicionar no Import**:
+   ```typescript
+   @NgModule({
+     declarations: [
+       AppComponent,
+       // outros componentes
+     ],
+     imports: [
+       BrowserModule,
+       HttpClientModule,
+       // outros módulos
+     ],
+     providers: [],
+     bootstrap: [AppComponent]
+   })
+   export class AppModule { }
+   ```
+
+### Exemplos de Uso
+
+#### Injeção de `HttpClient` em um Serviço
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+
+  private apiUrl = 'https://api.example.com/data';
+
+  constructor(private http: HttpClient) { }
+
+  // Método GET
+  getData(): Observable<any> {
+    return this.http.get(this.apiUrl);
+  }
+
+  // Método POST
+  postData(data: any): Observable<any> {
+    return this.http.post(this.apiUrl, data);
+  }
+}
+```
+
+#### Uso em um Componente
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';
+
+@Component({
+  selector: 'app-data',
+  templateUrl: './data.component.html',
+  styleUrls: ['./data.component.css']
+})
+export class DataComponent implements OnInit {
+
+  data: any;
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    this.dataService.getData().subscribe(
+      (response) => {
+        this.data = response;
+      },
+      (error) => {
+        console.error('Erro ao buscar dados', error);
+      }
+    );
+  }
+
+  onSubmit(data: any): void {
+    this.dataService.postData(data).subscribe(
+      (response) => {
+        console.log('Dados enviados com sucesso', response);
+      },
+      (error) => {
+        console.error('Erro ao enviar dados', error);
+      }
+    );
+  }
+}
+```
+
+### Interceptores
+
+Interceptores são usados para modificar solicitações e respostas HTTP. Eles são úteis para adicionar autenticação, registrar atividades ou manipular erros globalmente.
+
+#### Exemplo de Interceptor
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const cloned = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`)
+      });
+      return next.handle(cloned).pipe(
+        catchError(err => {
+          // Tratamento de erro global
+          return throwError(err);
+        })
+      );
+    }
+    return next.handle(req);
+  }
+}
+```
+
+#### Registro de Interceptor
+
+```typescript
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+@NgModule({
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ]
+})
+export class AppModule { }
+```
+
+### Conclusão
+
+O `HttpClient` é uma ferramenta poderosa e flexível para fazer requisições HTTP no Angular. Ele simplifica a comunicação com servidores remotos, oferece suporte robusto para operações assíncronas com Observables e fornece mecanismos avançados para manipulação de erros, autenticação e intercepção de requisições e respostas.
