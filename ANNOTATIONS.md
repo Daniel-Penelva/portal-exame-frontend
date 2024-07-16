@@ -371,3 +371,228 @@ export class AppModule { }
 ### Conclusão
 
 O `HttpClient` é uma ferramenta poderosa e flexível para fazer requisições HTTP no Angular. Ele simplifica a comunicação com servidores remotos, oferece suporte robusto para operações assíncronas com Observables e fornece mecanismos avançados para manipulação de erros, autenticação e intercepção de requisições e respostas.
+
+---
+
+# Interceptor
+
+Os **Interceptores** no Angular são uma poderosa funcionalidade do módulo `@angular/common/http` que permitem interceptar e modificar requisições e respostas HTTP antes de serem enviadas ou processadas. Eles são ideais para adicionar cabeçalhos de autenticação, manipular erros globalmente e realizar outras tarefas relacionadas às chamadas HTTP.
+
+### Principais Características
+
+1. **Interceptação de Requisições**:
+   - Você pode modificar ou adicionar informações a uma requisição antes que ela seja enviada ao servidor.
+
+2. **Interceptação de Respostas**:
+   - Permite manipular a resposta recebida de uma requisição antes que ela seja processada pelo componente que fez a chamada.
+
+3. **Tratamento de Erros**:
+   - Os interceptores podem ser usados para capturar e tratar erros de forma centralizada, como redirecionar usuários não autenticados.
+
+4. **Encadeamento de Interceptores**:
+   - Vários interceptores podem ser registrados e serão executados em ordem, permitindo uma configuração modular e reutilizável.
+
+### Uso Comum
+Interceptors são comumente usados para:
+
+  - Adicionar tokens de autenticação a cabeçalhos.
+  - Tratar erros globais.
+  - Registrar atividades de requisições.
+  - Manipular respostas, como transformar dados.
+
+### Como Criar um Interceptor - Exemplo Simples
+
+#### Passo 1: Criar o Interceptor
+
+Você pode criar um interceptor implementando a interface `HttpInterceptor`.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Clonar a requisição para adicionar um novo cabeçalho
+    const token = localStorage.getItem('token');
+    if (token) {
+      const cloned = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`)
+      });
+      return next.handle(cloned).pipe(
+        catchError(err => {
+          // Tratamento de erro
+          console.error('Erro na requisição:', err);
+          throw err;
+        })
+      );
+    }
+    return next.handle(req);
+  }
+}
+```
+
+Explicação dos Componentes
+  - @Injectable(): Indica que a classe pode ser injetada como um serviço.
+
+  - HttpInterceptor: Interface que você deve implementar para criar um interceptor.
+
+  - intercept(): Método onde você pode manipular a requisição. Ele recebe a requisição original (req) e o próximo manipulador (next). Você pode modificar a requisição e, em seguida, passar para o próximo manipulador.
+
+#### Passo 2: Registrar o Interceptor
+
+Os interceptores devem ser registrados no módulo principal da aplicação (`AppModule`) ou em um módulo específico.
+
+```typescript
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+@NgModule({
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ]
+})
+export class AppModule { }
+```
+
+### Fluxo de Funcionamento
+
+1. **Requisição**:
+   - Quando uma requisição HTTP é feita, o Angular a intercepta e a envia para o interceptor.
+   - O interceptor pode modificar a requisição (adicionar cabeçalhos, modificar o corpo, etc.) e, em seguida, passa a requisição para o próximo manipulador.
+
+2. **Resposta**:
+   - Após a requisição ser processada pelo servidor, a resposta é recebida pelo interceptor, onde também pode ser manipulada antes de ser enviada ao componente que a fez.
+
+### Exemplo de Interceptor com Tratamento de Erro
+
+Aqui está um exemplo completo que captura erros de autenticação:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Injectable()
+export class ErrorInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req).pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          // Redirecionar para a página de login ou mostrar um alerta
+          console.error('Usuário não autenticado!');
+        }
+        return throwError(err);
+      })
+    );
+  }
+}
+```
+
+## Implementação do Interceptor da aplicação
+
+Detalhando a implementação do `AuthInterceptor`.
+
+### Estrutura do AuthInterceptor
+
+```typescript
+import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LoginService } from './login.service';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private loginService: LoginService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let authReq = req;
+    const token = this.loginService.getToken();
+    
+    if (token != null) {
+      authReq = authReq.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+    }
+    
+    return next.handle(authReq);
+  }
+}
+
+export const authInterceptorProviders = [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+  },
+];
+```
+
+### Explicação dos Componentes
+
+1. **Importações**:
+   - `HTTP_INTERCEPTORS`, `HttpEvent`, `HttpHandler`, `HttpInterceptor`, `HttpRequest`: São classes e interfaces do Angular para trabalhar com requisições HTTP.
+   - `Injectable`: Decorador que marca a classe como um serviço que pode ser injetado.
+   - `Observable`: Tipo do RxJS usado para manipular operações assíncronas.
+   - `LoginService`: Serviço que deve conter a lógica relacionada ao login e gerenciamento de tokens.
+
+2. **Classe AuthInterceptor**:
+   - A classe implementa a interface `HttpInterceptor`, que requer a implementação do método `intercept`.
+
+3. **Método `intercept`**:
+   - **Parâmetros**:
+     - `req`: A requisição HTTP original.
+     - `next`: O próximo manipulador na cadeia de interceptação.
+   - **Lógica**:
+     - Verifica se um token JWT está disponível através do `LoginService`.
+     - Se um token for encontrado, ele clona a requisição original e adiciona o cabeçalho `Authorization` com o token.
+     - Em seguida, passa a requisição (original ou clonada) para o próximo manipulador na cadeia.
+
+4. **Exportação de Providers**:
+   - O `authInterceptorProviders` é um array que registra o `AuthInterceptor` como um provedor de `HTTP_INTERCEPTORS`.
+   - `multi: true` indica que múltiplos interceptors podem ser usados, permitindo que outros interceptors sejam registrados juntamente com esse.
+
+### Uso Comum
+
+Esse interceptor é útil para:
+
+- **Autenticação**: Automatiza a inclusão do token em todas as requisições que requerem autenticação.
+- **Centralização**: Mantém a lógica de autenticação em um único lugar, facilitando a manutenção.
+
+### Registro no Módulo
+
+Para utilizar o interceptor, você deve registrá-lo no seu módulo principal (geralmente `AppModule`):
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { authInterceptorProviders } from './path/to/auth.interceptor';
+
+@NgModule({
+  declarations: [
+    // Componentes
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    // Outros módulos
+  ],
+  providers: [
+    authInterceptorProviders,
+    // Outros provedores
+  ],
+  bootstrap: [/* Componente raiz */]
+})
+export class AppModule { }
+```
+
+Esse `AuthInterceptor` é uma implementação eficiente para garantir que seu aplicativo Angular esteja sempre enviando o token de autenticação necessário em requisições HTTP, melhorando a segurança e a organização do código.
+
+### Conclusão
+
+Os interceptores são uma ferramenta valiosa no Angular, permitindo que você centralize a lógica de manipulação de requisições e respostas HTTP. Eles ajudam a manter seu código organizado e a aplicar funcionalidades como autenticação e tratamento de erros de forma consistente em toda a aplicação.
