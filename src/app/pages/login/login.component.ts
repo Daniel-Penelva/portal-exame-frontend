@@ -40,10 +40,25 @@ export class LoginComponent implements OnInit{
 
       this.loginService.loginUser(data.token);
       this.loginService.getCurrentUser().subscribe((user: any) => {
+        this.loginService.setUser(user);                                  // acessa as informações do usuário
         console.log(user);
+
+        if(this.loginService.getUserRole() == "ADMIN"){                   // obtêm o role "ADMIN" do usuário para acessar a página dashboard admin
+          window.location.href = '/admin';
+
+        }else if(this.loginService.getUserRole() == "USER"){              // obtêm o role "USER" do usuário para acessar a página dashboard user
+          window.location.href = '/user-dashboard';
+
+        }else{
+          this.loginService.logout();                                     // remove os dados de autenticação e fecha a sessão
+        }
+
       });
     },(error)=>{
       console.log(error);
+      this.snack.open('Username ou password inválido', 'Fechar', {
+        duration: 3000
+      });
     });
   }
 
