@@ -42,4 +42,11 @@ export class LoginService {
     return localStorage.getItem('token');               // recupera o valor associado à chave 'token' do localStorage. Se achave estiver presente no localStorage, o método retorna o valor do token de autenticação. Caso contrário retorna null.
   }
 
+
+  /* método é utilizado para armazenar informações do usuário no localStorage. Esse método garante a facilidade de acesso as informações do 
+  usuário em diferentes partes da aplicação sem a necessidade de fazer requisições ao servidor.*/ 
+  public setUser(user:any){
+    localStorage.setItem('user', JSON.stringify(user));  // converte o objeto 'user' em uma string JSON e em seguida armazena essa string no localStorage com a chave 'user'.
+  }
+
 }
