@@ -49,4 +49,15 @@ export class LoginService {
     localStorage.setItem('user', JSON.stringify(user));  // converte o objeto 'user' em uma string JSON e em seguida armazena essa string no localStorage com a chave 'user'.
   }
 
+  /* método para recuperar as informações do usuário armazenadas no localStorage.*/
+  public getUser(){
+    let userStr = localStorage.getItem('user');          // recupera a string armazenada no localStorage com a chave 'user'
+    if(userStr != null){
+      return JSON.parse(userStr);                        // Caso o string não seja nulo, ela é convertida de volta para um objeto JavaScript usando o 'JSON.parse'.
+    }else{
+      this.logout();
+      return null;                                       // se a string for nula, significa que não há informações do usuário armazenadas. E é chamado o logout() para remover o token ou informações residuais no localStorage.
+    }
+  }
+
 }
