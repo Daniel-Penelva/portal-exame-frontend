@@ -60,4 +60,13 @@ export class LoginService {
     }
   }
 
+  
+  /* método é utilizado para obter o role do usuário que está armazenado no localStorage. Esse método é útil quando a aplicação precisa 
+  determinar as permissões ou o nível de acesso do usuário. Por exemplo, saber se o usuário tem permissões administrativas ou apenas 
+  permissões de usuário comum.*/
+  public getUserRole(){
+    let user = this.getUser();                            // obtêm as informações do usuário armazenadas no localStorage. 
+    return user.authorities[0].authority;                 // acessa o role do usuário na lista de authorities e retorna o valor da propriedade 'authority'.
+  }
+
 }
