@@ -596,3 +596,319 @@ Esse `AuthInterceptor` é uma implementação eficiente para garantir que seu ap
 ### Conclusão
 
 Os interceptores são uma ferramenta valiosa no Angular, permitindo que você centralize a lógica de manipulação de requisições e respostas HTTP. Eles ajudam a manter seu código organizado e a aplicar funcionalidades como autenticação e tratamento de erros de forma consistente em toda a aplicação.
+
+---
+
+# Guards
+
+Em Angular, um guard (guarda) é um serviço que pode usar para determinar se uma rota pode ser ativada ou desativada. Os guards são usados para implementar funcionalidades como controle de acesso, verificações de autenticação, autorizações, carregamento de dados, e confirmação de saída de páginas. 
+
+Um guard é uma funcionalidade em Angular que permite controlar o acesso a rotas específicas. Ele é utilizado para proteger rotas de serem acessadas por usuários que não têm permissão.
+
+Existem diferentes tipos de guards em Angular:
+
+1. **CanActivate**: Decide se uma rota pode ser ativada.
+2. **CanActivateChild**: Decide se uma rota filha pode ser ativada.
+3. **CanDeactivate**: Decide se a rota atual pode ser desativada, ou seja, se pode sair da rota.
+4. **CanLoad**: Decide se um módulo pode ser carregado (usado principalmente para carregamento tardio ou lazy loading).
+5. **Resolve**: Busca dados antes da rota ser ativada.
+
+### Exemplo simples de CanActivate Guard
+
+criando e usar um `CanActivate` guard:
+
+#### 1. Criar o Guard
+
+Primeiro, crie o guard usando o Angular CLI:
+
+```sh
+ng generate guard auth
+```
+
+Isso gera um serviço guard (`auth.guard.ts`) que implementa a interface `CanActivate`.
+
+#### 2. Implementar o Guard
+
+No arquivo gerado é implementado a lógica para decidir se a rota pode ser ativada:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service'; // Serviço de autenticação fictício
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    const isLoggedIn = this.authService.isLoggedIn(); // Verifica se o usuário está logado
+    if (isLoggedIn) {
+      return true;
+    } else {
+      // Redireciona para a página de login
+      this.router.navigate(['/login']);
+      return false;
+    }
+  }
+}
+```
+
+#### 3. Usar o Guard nas Rotas
+
+Aplicando o guard às rotas no arquivo de roteamento (`app-routing.module.ts`):
+
+```typescript
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
+
+const routes: Routes = [
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] }, // Rota protegida pelo guard
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+
+### Outros Tipos de Guards
+
+- **CanActivateChild**: Similar ao `CanActivate`, mas aplica-se a rotas filhas. Implementa a interface `CanActivateChild`.
+- **CanDeactivate**: Usado para decidir se é permitido sair de uma rota. Implementa a interface `CanDeactivate`.
+- **CanLoad**: Usado para proteger módulos carregados tardiamente. Implementa a interface `CanLoad`.
+- **Resolve**: Utilizado para pré-carregar dados antes de ativar uma rota. Implementa a interface `Resolve`.
+
+### Exemplo simples de CanDeactivate Guard
+
+Um exemplo de `CanDeactivate` guard, que pergunta ao usuário se ele quer realmente sair da página:
+
+#### 1. Criar o Guard
+
+```sh
+ng generate guard can-deactivate
+```
+
+#### 2. Implementar o Guard
+
+```typescript
+import { Injectable } from '@angular/core';
+import { CanDeactivate } from '@angular/router';
+import { Observable } from 'rxjs';
+
+export interface CanComponentDeactivate {
+  canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
+  canDeactivate(
+    component: CanComponentDeactivate): Observable<boolean> | Promise<boolean> | boolean {
+    return component.canDeactivate ? component.canDeactivate() : true;
+  }
+}
+```
+
+#### 3. Implementar no Componente
+
+No componente que deseja proteger, implementa a interface `CanComponentDeactivate`:
+
+```typescript
+import { Component } from '@angular/core';
+import { CanComponentDeactivate } from './can-deactivate.guard';
+import { Observable } from 'rxjs';
+
+@Component({
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css']
+})
+export class EditProfileComponent implements CanComponentDeactivate {
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    return confirm('Você tem certeza que quer sair? As alterações não salvas serão perdidas.');
+  }
+}
+```
+
+#### 4. Usar o Guard nas Rotas
+
+```typescript
+const routes: Routes = [
+  { path: 'edit-profile', component: EditProfileComponent, canDeactivate: [CanDeactivateGuard] }
+];
+```
+
+Esses exemplos simples demonstram como criar e usar diferentes tipos de guards em Angular para proteger as rotas e gerenciar a navegação no aplicativo.
+
+## Meu exemplo Guard Admin na aplicação
+
+### Objetivo do `AdminGuard`
+O `AdminGuard` no seu exemplo verifica se o usuário está logado e se possui o papel de "ADMIN". Se ambas as condições forem verdadeiras, ele permite o acesso à rota protegida. Caso contrário, ele redireciona o usuário para a página de login.
+
+### Detalhamento do Código
+
+Comentando o código passo a passo:
+
+```typescript
+import { Injectable } from '@angular/core'; // Importa o decorator Injectable para permitir a injeção de dependência.
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router'; // Importa interfaces e classes necessárias para criar um guard.
+import { Observable } from 'rxjs'; // Importa Observable do RxJS.
+import { LoginService } from './login.service'; // Importa o serviço de login, que contém métodos para verificar a autenticação do usuário.
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminGuard implements CanActivate {
+  // O decorator @Injectable com providedIn: 'root' faz com que este serviço seja um singleton e esteja disponível em toda a aplicação.
+
+  constructor(private loginService: LoginService, private router: Router) {}
+  // O constructor injeta o LoginService e o Router no guard. O LoginService é usado para verificar o status de login e o papel do usuário, e o Router é usado para redirecionar o usuário se necessário.
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    // O método canActivate é chamado pelo Angular Router para determinar se a rota pode ser ativada.
+    // Ele pode retornar um booleano, uma Promise ou um Observable de booleano.
+
+    if (this.loginService.isLoggedIn() && this.loginService.getUserRole() === 'ADMIN') {
+      // Verifica se o usuário está logado e se o seu papel é 'ADMIN'.
+      return true; // Se as condições forem verdadeiras, permite a ativação da rota retornando true.
+    }
+
+    this.router.navigate(['login']); // Se as condições não forem satisfeitas, redireciona o usuário para a página de login.
+    return false; // Retorna false para impedir a ativação da rota.
+  }
+}
+```
+
+### Uso do Guard no Roteamento
+Para aplicar o `AdminGuard` a uma rota específica deve configurá-lo no módulo de roteamento. Por exemplo:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './pages/home/home.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { LoginComponent } from './pages/login/login.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
+import { AdminGuard } from './services/admin.guard';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent, pathMatch: 'full' },         // Já está definido a URL raiz para o HomeComponent que vai ser a página principal
+  { path: 'signup', component: SignupComponent, pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, pathMatch: 'full' },
+  {path: 'admin', component: DashboardComponent, pathMatch: 'full', canActivate:[AdminGuard]},
+  {path: 'user-dashboard', component: UserDashboardComponent, pathMatch: 'full'}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+```
+
+### Explicação do Processo
+1. **Tentativa de Acesso à Rota Protegida**:
+   Quando um usuário tenta acessar a rota protegida (`/admin`), o Angular Router chama o método `canActivate` do `AdminGuard`. Se o guard retornar true, o acesso à rota é permitido. Caso contrário, o usuário é redirecionado para a página de login.
+
+2. **Verificação de Autenticação e Autorização**:
+   O método `canActivate` verifica se o usuário está autenticado (`isLoggedIn()`) e se possui o papel de "ADMIN" (`getUserRole() === 'ADMIN'`).
+
+3. **Acesso Permitido ou Negado**:
+   - Se o usuário está autenticado e possui o papel "ADMIN", a função retorna `true`, permitindo que a rota seja ativada.
+   - Caso contrário, a função redireciona o usuário para a página de login (`this.router.navigate(['login'])`) e retorna `false`, impedindo a ativação da rota.
+
+### Benefícios do Uso de Guards
+- **Segurança**: Protege rotas sensíveis, garantindo que apenas usuários autorizados possam acessá-las.
+- **Controle de Navegação**: Permite controlar e redirecionar usuários com base em suas permissões e estado de autenticação.
+- **Manutenção de Código Limpo**: Separa a lógica de autenticação e autorização do componente, mantendo o código mais limpo e fácil de manter.
+
+Em resumo, o `AdminGuard` é um mecanismo para garantir que apenas usuários autenticados com o papel de "ADMIN" possam acessar determinadas rotas na aplicação.
+
+### Fluxo de Verificação com o Guard
+
+Quando um usuário tenta navegar para uma rota que possui um `Guard` associado, o Angular Router primeiro verifica se o `Guard` permite ou não o acesso a essa rota. Vamos detalhar como isso funciona.
+
+1. **Usuário Tenta Navegar para a Rota Protegida**:
+   - Quando um usuário tenta acessar uma rota, o Angular Router inicia o processo de verificação.
+
+2. **`canActivate` do Guard é Chamado**:
+   - O método `canActivate` do `Guard` associado à rota é chamado.
+   - No exemplo, é o método `canActivate` do `AdminGuard`.
+
+3. **Verificação de Condições no Guard**:
+   - O `Guard` executa a lógica para determinar se o acesso à rota deve ser permitido.
+   - No `AdminGuard`, a lógica verifica se o usuário está logado (`this.loginService.isLoggedIn()`) e se possui o papel de "ADMIN" (`this.loginService.getUserRole() === 'ADMIN'`).
+
+4. **Decisão de Acesso**:
+   - Se o `Guard` retornar `true`, o Angular Router permite a navegação para a rota solicitada.
+   - Se o `Guard` retornar `false`, o Angular Router impede a navegação e, no caso do `AdminGuard`, redireciona o usuário para a página de login (`this.router.navigate(['login'])`).
+
+### Exemplo Prático
+
+Considerando novamente o `AdminGuard`:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { LoginService } from './login.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminGuard implements CanActivate {
+
+  constructor(private loginService: LoginService, private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.loginService.isLoggedIn() && this.loginService.getUserRole() === 'ADMIN') {
+      return true;
+    }
+
+    this.router.navigate(['login']);
+    return false;
+  }
+}
+```
+
+### Passos na Prática
+
+1. **Usuário Navega para `/admin`**:
+   - O usuário tenta acessar a rota `/admin`.
+
+2. **Angular Router Chama `AdminGuard`**:
+   - O `AdminGuard` é chamado para verificar se o usuário pode acessar a rota.
+
+3. **Verificação de Login e Papel**:
+   - `this.loginService.isLoggedIn()` verifica se o usuário está logado.
+   - `this.loginService.getUserRole()` verifica se o papel do usuário é "ADMIN".
+
+4. **Decisão do Guard**:
+   - Se ambas as condições são verdadeiras, o método `canActivate` retorna `true`, permitindo o acesso à rota `/admin`.
+   - Se qualquer condição falhar, o método `canActivate` retorna `false`, redirecionando o usuário para a rota de login.
+
+### Resumo
+
+Quando define um `Guard` para uma rota, o Angular Router sempre executa o `Guard` antes de permitir o acesso à rota. O `Guard` atua como um ponto de verificação que decide se a navegação pode prosseguir com base em condições especificadas na lógica do `Guard`. Isso é crucial para proteger rotas que devem ser acessíveis apenas para usuários autenticados ou que possuem certos privilégios, como administradores.
