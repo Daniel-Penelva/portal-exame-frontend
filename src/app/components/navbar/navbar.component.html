@@ -12,6 +12,7 @@
   <span class="example-spacer"></span>
 
   <a
+    *ngIf = "!login.isLoggedIn()"
     [routerLink]="'/login'"
     mat-icon-button
     class="example-icon favorite-icon"
@@ -21,6 +22,7 @@
   </a>
 
   <a
+    *ngIf = "!login.isLoggedIn()"
     [routerLink]="'/signup'"
     mat-icon-button
     class="example-icon favorite-icon mr20 ml70"
@@ -28,4 +30,24 @@
   >
     Registrar
   </a>
+
+  <a
+    *ngIf = "login.isLoggedIn()"
+    (click)="logout()"
+    style="margin-right: 40px; color: #f5f5f5"
+    class="example-icon favorite-icon mr20 ml70"
+    aria-label="Example icon-button with heart icon"
+  >
+    Logout
+  </a>
+
+  <button
+    *ngIf = "login.isLoggedIn()"
+    mat-button
+    style="margin-right: 10px"
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    {{ login.getUser().username }}
+  </button>
 </mat-toolbar>
