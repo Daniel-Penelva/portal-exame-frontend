@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit{
     "password": ''
   }
 
-  constructor(private snack: MatSnackBar, private loginService: LoginService){
+  constructor(private snack: MatSnackBar, private loginService: LoginService, private router: Router){
 
   }
 
@@ -44,10 +45,13 @@ export class LoginComponent implements OnInit{
         console.log(user);
 
         if(this.loginService.getUserRole() == "ADMIN"){                   // obtêm o role "ADMIN" do usuário para acessar a página dashboard admin
-          window.location.href = '/admin';
+          //window.location.href = '/admin';
+          this.router.navigate(['admin']);
+          
 
         }else if(this.loginService.getUserRole() == "USER"){              // obtêm o role "USER" do usuário para acessar a página dashboard user
-          window.location.href = '/user-dashboard';
+          //window.location.href = '/user-dashboard';
+          this.router.navigate(['user-dashboard']);
 
         }else{
           this.loginService.logout();                                     // remove os dados de autenticação e fecha a sessão
