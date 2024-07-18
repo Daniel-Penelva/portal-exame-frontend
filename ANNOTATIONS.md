@@ -912,3 +912,47 @@ export class AdminGuard implements CanActivate {
 ### Resumo
 
 Quando define um `Guard` para uma rota, o Angular Router sempre executa o `Guard` antes de permitir o acesso à rota. O `Guard` atua como um ponto de verificação que decide se a navegação pode prosseguir com base em condições especificadas na lógica do `Guard`. Isso é crucial para proteger rotas que devem ser acessíveis apenas para usuários autenticados ou que possuem certos privilégios, como administradores.
+
+---
+
+# Subject
+
+Essas duas linhas de código escritas estão relacionadas ao uso de `Subject` do RxJS para gerenciar o estado de login na aplicação Angular.
+
+### No `login.service.ts`:
+```typescript
+public loginStatusSubject = new Subject<boolean>();
+```
+
+### No `login.component.ts`:
+```typescript
+this.loginService.loginStatusSubject.next(true);
+```
+
+### Explicação
+
+1. **`Subject` no RxJS**:
+   - `Subject` é uma classe do RxJS que permite criar um observável que pode emitir valores para seus assinantes. Ele pode ser usado para multicast (enviar múltiplos valores para múltiplos observadores).
+
+2. **`loginStatusSubject` no `login.service.ts`**:
+   - Essa linha cria uma instância de `Subject` que emitirá valores booleanos (`true` ou `false`) para indicar o status de login do usuário.
+   - Este `Subject` pode ser utilizado para informar a outros componentes da aplicação sobre mudanças no status de login.
+
+3. **`loginStatusSubject.next(true)` no `login.component.ts`**:
+   - Essa linha de código emite um valor (`true`) para todos os assinantes do `loginStatusSubject`.
+   - Neste caso, quando o usuário faz login, você está emitindo `true` para indicar que o usuário está logado.
+
+### Como funciona em conjunto
+
+Quando o usuário faz login:
+- **No componente de login** (`login.component.ts`), após o login ser bem-sucedido, é chamado o `this.loginService.loginStatusSubject.next(true);`. Isso emite um valor `true` para o `Subject` no serviço de login.
+- **No serviço de login** (`login.service.ts`), a instância de `Subject` (`loginStatusSubject`) emite o valor `true`.
+
+### Para que serve
+
+1. **Comunicação entre componentes**:
+   - Essa abordagem permite que outros componentes da aplicação que estão interessados no estado de login se inscrevam no `Subject` e reajam quando o status de login muda.
+   - Por exemplo, a barra de navegação (navbar) pode se inscrever no `loginStatusSubject` para atualizar dinamicamente os itens de menu quando o usuário faz login ou logout.
+
+2. **Gerenciamento de estado**:
+   - Utilizar um `Subject` é uma forma eficiente de gerenciar e disseminar o estado de login pela aplicação sem a necessidade de passar o estado de componente para componente manualmente.

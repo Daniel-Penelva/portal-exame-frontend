@@ -47,11 +47,12 @@ export class LoginComponent implements OnInit{
         if(this.loginService.getUserRole() == "ADMIN"){                   // obtêm o role "ADMIN" do usuário para acessar a página dashboard admin
           //window.location.href = '/admin';
           this.router.navigate(['admin']);
-          
+          this.loginService.loginStatusSubject.next(true);
 
         }else if(this.loginService.getUserRole() == "USER"){              // obtêm o role "USER" do usuário para acessar a página dashboard user
           //window.location.href = '/user-dashboard';
           this.router.navigate(['user-dashboard']);
+          this.loginService.loginStatusSubject.next(true);
 
         }else{
           this.loginService.logout();                                     // remove os dados de autenticação e fecha a sessão
