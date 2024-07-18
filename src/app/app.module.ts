@@ -23,6 +23,7 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SidebarComponent } from './pages/admin/sidebar/sidebar.component';
 import {MatListModule} from '@angular/material/list';
+import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {MatListModule} from '@angular/material/list';
     DashboardComponent,
     UserDashboardComponent,
     ProfileComponent,
-    SidebarComponent
+    SidebarComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
