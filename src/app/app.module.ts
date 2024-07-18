@@ -22,6 +22,7 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SidebarComponent } from './pages/admin/sidebar/sidebar.component';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { SidebarComponent } from './pages/admin/sidebar/sidebar.component';
     ReactiveFormsModule,
     MatCardModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ],
   providers: [
     provideAnimationsAsync(),

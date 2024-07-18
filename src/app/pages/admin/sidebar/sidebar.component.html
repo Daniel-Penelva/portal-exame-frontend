@@ -1,1 +1,11 @@
-<p>sidebar works!</p>
+<mat-card>
+  <mat-action-list>                <!-- Angular Material: Para utilizar "mat-action-list" tem que importar o MatListModule no app.module.ts -->
+    <div mat-subheader>Menu</div>
+    <button mat-list-item>
+      <mat-icon mat-list-icon>home</mat-icon> Inicio
+    </button>
+    <button mat-list-item routerLink="/admin/profile">
+      <mat-icon mat-list-icon>account_circle</mat-icon> Perfil
+    </button>
+  </mat-action-list>
+</mat-card>
