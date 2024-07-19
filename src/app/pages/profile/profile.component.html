@@ -5,30 +5,30 @@
             <div class = "container">
                 <div class = "text-center">
                     <img src="../../../assets/perfil.png" alt="icone perfil" class = "profile-image">
-                    <h1 class="mt20">Daniel Penelva</h1>
+                    <h1 class="mt20">{{ user.firstname }} {{ user.lastname }}</h1>
                 </div>
                 <div class = "row">
                     <div class = "col-md-10 offset-md-1">
                         <table class = "table text-center">
                             <tr>
                                 <td>Nome do Usuário</td>
-                                <td>Daniel Penelva</td>
+                                <td>{{ user.firstname }}</td>
                             </tr>
                             <tr>
                                 <td>ID do Usuário</td>
-                                <td>1</td>
+                                <td>{{ user.id }}</td>
                             </tr>
                             <tr>
                                 <td>Telefone do Usuário</td>
-                                <td>(21)99567-8899</td>
+                                <td>{{ user.phone }}</td>
                             </tr>
                             <tr>
                                 <td>Permissão do Usuário</td>
-                                <td>ADMIN</td>
+                                <td>{{ user.authorities[0].authority }}</td>
                             </tr>
                             <tr>
                                 <td>Situação do Usuário</td>
-                                <td>Ativo</td>
+                                <td>{{ user.enabled ? "Ativo" : "Não ativo"}}</td>
                             </tr>
                         </table>
                     </div>
