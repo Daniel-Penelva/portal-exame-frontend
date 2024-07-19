@@ -42,12 +42,12 @@
   </a>
 
   <button
-    *ngIf = "login.isLoggedIn()"
+    *ngIf = "login.isLoggedIn() && user"
     mat-button
     style="margin-right: 10px"
     class="example-icon favorite-icon"
     aria-label="Example icon-button with heart icon"
   >
-  {{ login.getUser().username }}
+  {{ user.firstname }}
   </button>
 </mat-toolbar>
