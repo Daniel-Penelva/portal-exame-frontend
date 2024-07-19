@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },         // Já está definido a URL raiz para o HomeComponent que vai ser a página principal
   { path: 'signup', component: SignupComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
-  {path: 'admin', component: DashboardComponent, pathMatch: 'full', canActivate:[AdminGuard], children:[{path: 'profile', component: ProfileComponent}, {path: '', component: WelcomeComponent}]},
+  {path: 'admin', component: DashboardComponent, canActivate:[AdminGuard], children:[{path: 'profile', component: ProfileComponent}, {path: '', component: WelcomeComponent}]},
   {path: 'user-dashboard', component: UserDashboardComponent, pathMatch: 'full', canActivate:[UserGuard]}
 ];
 
