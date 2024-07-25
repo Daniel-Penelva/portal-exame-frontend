@@ -9,13 +9,15 @@ import { AdminGuard } from './services/admin.guard';
 import { UserGuard } from './services/user.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
+import { ViewCategoriasComponent } from './pages/admin/view-categorias/view-categorias.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },         // Já está definido a URL raiz para o HomeComponent que vai ser a página principal
   { path: 'signup', component: SignupComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
   {path: 'admin', component: DashboardComponent, canActivate:[AdminGuard], children:[{path: 'profile', component: ProfileComponent}, {path: '', component: WelcomeComponent}]},
-  {path: 'user-dashboard', component: UserDashboardComponent, pathMatch: 'full', canActivate:[UserGuard]}
+  {path: 'user-dashboard', component: UserDashboardComponent, pathMatch: 'full', canActivate:[UserGuard]},
+  {path: 'categorias', component: ViewCategoriasComponent}
 ];
 
 @NgModule({
