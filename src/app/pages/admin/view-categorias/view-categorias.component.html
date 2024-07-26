@@ -2,11 +2,12 @@
 <div class="container mt-4">
   <div class="card">
     <div class="card-header">
-      <h5>Todas as categorias</h5>
+      <h4>Todas as categorias</h4>
     </div>
     <ul class="list-group list-group-flush">                      <!-- https://getbootstrap.com/docs/4.0/components/card/ -->
       <li class="list-group-item" *ngFor="let c of categorias">
-        <h6>{{ c.titulo }}</h6>
+        <mat-icon mat-list-icon>category</mat-icon>               <!-- Angular Material: Para utilizar "mat-icon" tem que importar o MatIconModule no app.module.ts -->
+        <h5>{{ c.titulo }}</h5>
         <p>{{ c.descricao }}</p>
       </li>
     </ul>
