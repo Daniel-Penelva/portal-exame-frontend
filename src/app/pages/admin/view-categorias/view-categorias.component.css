@@ -1,0 +1,18 @@
+/* view-categorias.component.css */
+.container {
+  max-width: 950px;
+}
+
+.card-header,
+.card-footer {
+  background-color: #f8f9fa;
+}
+
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}

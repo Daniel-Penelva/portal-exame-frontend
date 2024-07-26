@@ -1,1 +1,17 @@
-<p>view-categorias works!</p>
+<!-- view-categorias.component.html -->
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h5>Todas as categorias</h5>
+    </div>
+    <ul class="list-group list-group-flush">                      <!-- https://getbootstrap.com/docs/4.0/components/card/ -->
+      <li class="list-group-item" *ngFor="let c of categorias">
+        <h6>{{ c.titulo }}</h6>
+        <p>{{ c.descricao }}</p>
+      </li>
+    </ul>
+    <div class="card-footer text-center">
+      <button class="btn btn-primary">Adicionar categoria</button>
+    </div>
+  </div>
+</div>
