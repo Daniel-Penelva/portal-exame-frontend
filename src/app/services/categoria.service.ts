@@ -13,4 +13,9 @@ export class CategoriaService {
   public listarCategoria(){
     return this.http.get(`${baserUrl}/categoria/`);
   }
+
+  // método para adicionar categoria - lembrando que esse método é do tipo Observable
+  public adicionarCategoria(categoria: any){
+    return this.http.post(`${baserUrl}/categoria/`, categoria);
+  }
 }
