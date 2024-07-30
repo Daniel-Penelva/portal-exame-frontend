@@ -27,6 +27,7 @@ import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
 import { ViewCategoriasComponent } from './pages/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './pages/admin/add-categoria/add-categoria.component';
 import { ViewExamesComponent } from './pages/admin/view-exames/view-exames.component';
+import { AddExameComponent } from './pages/admin/add-exame/add-exame.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { ViewExamesComponent } from './pages/admin/view-exames/view-exames.compo
     WelcomeComponent,
     ViewCategoriasComponent,
     AddCategoriaComponent,
-    ViewExamesComponent
+    ViewExamesComponent,
+    AddExameComponent
   ],
   imports: [
     BrowserModule,
