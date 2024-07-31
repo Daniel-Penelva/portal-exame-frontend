@@ -12,6 +12,7 @@ import { WelcomeComponent } from './pages/admin/welcome/welcome.component';
 import { ViewCategoriasComponent } from './pages/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './pages/admin/add-categoria/add-categoria.component';
 import { ViewExamesComponent } from './pages/admin/view-exames/view-exames.component';
+import { AddExameComponent } from './pages/admin/add-exame/add-exame.component';
 
 const routes: Routes = [
   { 
@@ -38,7 +39,8 @@ const routes: Routes = [
       {path: '', component: WelcomeComponent},
       {path: 'categorias', component: ViewCategoriasComponent},
       {path: 'add-categoria', component: AddCategoriaComponent},
-      {path: 'exames', component: ViewExamesComponent}
+      {path: 'exames', component: ViewExamesComponent},
+      {path: 'add-exame', component: AddExameComponent}
     ]
   },
   {
