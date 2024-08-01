@@ -5,24 +5,24 @@
             <form action="">
                 <mat-form-field class="w100" appearance="fill">
                     <mat-label>Título</mat-label>
-                    <input required type="text" name="titulo" matInput placeholder="Digite o título">
+                    <input required type="text" name="titulo" matInput [(ngModel)]="exameData.titulo" placeholder="Digite o título">
                 </mat-form-field>
                 <mat-form-field class="w100" appearance="fill">
                     <mat-label>Descrição</mat-label>
-                    <textarea type="text" name="descricao" matInput placeholder="Digite a descrição" rows="8"></textarea>
+                    <textarea type="text" name="descricao" matInput [(ngModel)]="exameData.descricao" placeholder="Digite a descrição" rows="8"></textarea>
                 </mat-form-field>
 
                 <div class="row">
                     <div class="col-md-6">
                         <mat-form-field class="w100" appearance="fill">
                             <mat-label>Pontos Máximos</mat-label>
-                            <input type="text" name="pontosMaximos" matInput placeholder="Digite a quantidade de pontos">
+                            <input type="text" name="pontosMaximos" matInput [(ngModel)]="exameData.pontosMaximos"  placeholder="Digite a quantidade de pontos">
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
                         <mat-form-field class="w100" appearance="fill">
                             <mat-label>Números de Perguntas</mat-label>
-                            <input type="text" name="numeroDePerguntas" matInput placeholder="Digite o número de perguntas">
+                            <input type="text" name="numeroDePerguntas" matInput [(ngModel)]="exameData.numeroDePerguntas"  placeholder="Digite o número de perguntas">
                         </mat-form-field>
                     </div>
                 </div>
