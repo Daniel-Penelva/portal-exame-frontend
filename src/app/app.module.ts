@@ -29,6 +29,7 @@ import { AddCategoriaComponent } from './pages/admin/add-categoria/add-categoria
 import { ViewExamesComponent } from './pages/admin/view-exames/view-exames.component';
 import { AddExameComponent } from './pages/admin/add-exame/add-exame.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSelectModule
   ],
   providers: [
     provideAnimationsAsync(),
