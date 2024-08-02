@@ -18,4 +18,9 @@ export class ExameService {
   public criarQuestionario(exame: any){
     return this.http.post(`${baserUrl}/exame/`, exame);
   }
+
+  // método para deletar questionário (ou exame) - lembrando que esse método é do tipo Observable
+  public deletarQuestionario(exameId: any){
+    return this.http.delete(`${baserUrl}/exame/${exameId}`);
+  }
 }
