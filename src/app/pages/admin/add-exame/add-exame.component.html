@@ -2,7 +2,7 @@
     <h1>Adicionar novo exame</h1>
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <form action="">
+            <form (ngSubmit)="criarQuestionario()">
                 <mat-form-field class="w100" appearance="fill">
                     <mat-label>Título</mat-label>
                     <input required type="text" name="titulo" matInput [(ngModel)]="exameData.titulo" placeholder="Digite o título">
@@ -46,4 +46,4 @@
     </div>
 </mat-card>
 
-Teste: {{ exameData | json}}
+<!-- Teste: {{ exameData | json}} --> 
