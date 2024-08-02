@@ -13,4 +13,9 @@ export class ExameService {
   public listarQuestionarios(){
     return this.http.get(`${baserUrl}/exame/`);
   }
+
+  // método para criar questionário (ou exame) - lembrando que esse método é do tipo Observable
+  public criarQuestionario(exame: any){
+    return this.http.post(`${baserUrl}/exame/`, exame);
+  }
 }
