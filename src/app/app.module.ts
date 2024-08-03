@@ -30,6 +30,7 @@ import { ViewExamesComponent } from './pages/admin/view-exames/view-exames.compo
 import { AddExameComponent } from './pages/admin/add-exame/add-exame.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
+import { AtualizarExameComponent } from './pages/admin/atualizar-exame/atualizar-exame.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import {MatSelectModule} from '@angular/material/select';
     ViewCategoriasComponent,
     AddCategoriaComponent,
     ViewExamesComponent,
-    AddExameComponent
+    AddExameComponent,
+    AtualizarExameComponent
   ],
   imports: [
     BrowserModule,
