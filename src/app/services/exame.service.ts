@@ -28,4 +28,9 @@ export class ExameService {
   public buscarQuestionarioPorId(exameId: any){
     return this.http.get(`${baserUrl}/exame/${exameId}`);
   }
+
+  // método para atualizar questionário (ou exame) - lembrando que esse método é do tipo Observable
+  public atualizarQuestionario(exame: any){
+    return this.http.post(`${baserUrl}/exame/`, exame);
+  }
 }
