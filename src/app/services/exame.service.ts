@@ -23,4 +23,9 @@ export class ExameService {
   public deletarQuestionario(exameId: any){
     return this.http.delete(`${baserUrl}/exame/${exameId}`);
   }
+
+  // método para buscar questionário (ou exame) por id - lembrando que esse método é do tipo Observable
+  public buscarQuestionarioPorId(exameId: any){
+    return this.http.get(`${baserUrl}/exame/${exameId}`);
+  }
 }
