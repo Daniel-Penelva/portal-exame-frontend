@@ -11,6 +11,6 @@ export class PerguntaService {
 
   // método para gerar listar de todas as perguntas do exame - lembrando que esse método é do tipo Observable
   public listarPerguntasDeExame(exameId: any){
-    return this.http.get(`${baserUrl}/pergunta/exame/${exameId}`);
+    return this.http.get(`${baserUrl}/pergunta/exame/todos/${exameId}`);
   }
 }
