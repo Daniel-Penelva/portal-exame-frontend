@@ -15,6 +15,7 @@ import { ViewExamesComponent } from './pages/admin/view-exames/view-exames.compo
 import { AddExameComponent } from './pages/admin/add-exame/add-exame.component';
 import { AtualizarExameComponent } from './pages/admin/atualizar-exame/atualizar-exame.component';
 import { ViewExamePerguntasComponent } from './pages/admin/view-exame-perguntas/view-exame-perguntas.component';
+import { AddPerguntaComponent } from './pages/admin/add-pergunta/add-pergunta.component';
 
 const routes: Routes = [
   { 
@@ -44,7 +45,8 @@ const routes: Routes = [
       {path: 'exames', component: ViewExamesComponent},
       {path: 'add-exame', component: AddExameComponent},
       {path: 'exame/:exameId', component: AtualizarExameComponent},
-      {path: 'ver-perguntas/:exameId/:titulo', component: ViewExamePerguntasComponent}
+      {path: 'ver-perguntas/:exameId/:titulo', component: ViewExamePerguntasComponent},
+      {path: 'add-pergunta/:exameId', component: AddPerguntaComponent}
     ]
   },
   {
