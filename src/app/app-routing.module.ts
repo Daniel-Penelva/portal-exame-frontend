@@ -46,7 +46,7 @@ const routes: Routes = [
       {path: 'add-exame', component: AddExameComponent},
       {path: 'exame/:exameId', component: AtualizarExameComponent},
       {path: 'ver-perguntas/:exameId/:titulo', component: ViewExamePerguntasComponent},
-      {path: 'add-pergunta/:exameId', component: AddPerguntaComponent}
+      {path: 'add-pergunta/:exameId/:titulo', component: AddPerguntaComponent}
     ]
   },
   {
