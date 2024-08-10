@@ -70,6 +70,19 @@ export class AddPerguntaComponent implements OnInit {
         this.pergunta.opcao3 = '';
         this.pergunta.opcao4 = '';
         this.pergunta.resposta = '';
+
+      // Verificar o número atual de perguntas
+      this.perguntaService.contarPerguntas(this.exameId).subscribe(
+        (count) => {
+          if (count >= this.maxPerguntas) {
+            Swal.fire('Limite atingido','Está foi a última pergunta a ser adicionada.','warning');
+            this.router.navigate(['/admin/exames']);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+    );
       },
       (error) => {
         Swal.fire('Erro', 'Erro ao salvar a pergunta na base de dados', 'error');
