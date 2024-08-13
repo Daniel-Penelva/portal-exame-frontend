@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PerguntaService } from '../../../services/pergunta.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-exame-perguntas',
@@ -27,6 +28,32 @@ export class ViewExamePerguntasComponent implements OnInit{
       }, (error) => {
         console.log(error);
       });
+  }
+
+  deletarPergunta(perguntaId: any){
+    Swal.fire({
+      title:'Remover pergunta',
+      text:'Está seguro de remover está pergunta?',
+      icon:'warning',
+      showCancelButton:true,
+      confirmButtonColor:'#3085d6',
+      cancelButtonColor:'#d33',
+      confirmButtonText:'Remover',
+      cancelButtonText:'Cancelar'
+    }).then((resultado) => {
+      if(resultado.isConfirmed){
+        this.perguntaService.deletarPergunta(perguntaId).subscribe(
+          (data) => {
+            this.snack.open('Pergunta removida','',{ duration:3000 })
+            this.perguntas = this.perguntas.filter((pergunta: any) => pergunta.perguntaId != perguntaId);  // filtra a lista local de perguntas para remover a pergunta que foi deletada, atualizando a lista exibida na interface do usuário.
+          },
+          (error) => {
+            this.snack.open('Erro ao remover a pergunta','',{ duration:3000 })
+            console.log(error);
+          }
+        )
+      }
+    })
   }
 
 }
