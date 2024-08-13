@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PerguntaService } from '../../../services/pergunta.service';
+import { ExameService } from '../../../services/exame.service';
 
 @Component({
   selector: 'app-add-pergunta',
@@ -21,12 +22,13 @@ export class AddPerguntaComponent implements OnInit {
     resposta: '',
   };
 
-  maxPerguntas: number = 10;
+  maxPerguntas: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private perguntaService: PerguntaService,
-    private router: Router
+    private router: Router,
+    private exameService: ExameService
   ) {}
 
   ngOnInit(): void {
@@ -34,13 +36,11 @@ export class AddPerguntaComponent implements OnInit {
     this.titulo = this.route.snapshot.params['titulo'];
     this.pergunta.exame['exameId'] = this.exameId;
 
-    // Verificar o número atual de perguntas
-    this.perguntaService.contarPerguntas(this.exameId).subscribe(
-      (count) => {
-        if (count >= this.maxPerguntas) {
-          Swal.fire('Limite atingido','Não é possível adicionar mais perguntas a este exame.','warning');
-          this.router.navigate(['/admin/exames']);
-        }
+    // Buscar os detalhes do exame e verificar o limite de perguntas
+    this.exameService.buscarQuestionarioPorId(this.exameId).subscribe(
+      (exame) => {
+        this.maxPerguntas = (exame as { numeroDePerguntas: number }).numeroDePerguntas;  // cast para informar que o objeto que estou manipulando é de um determinado tipo. Nesse caso, você vai dizer que o objeto retornado da API é um objeto que contém a propriedade numeroDePerguntas. 
+        this.verificarLimitePerguntas();
       },
       (error) => {
         console.log(error);
@@ -86,6 +86,21 @@ export class AddPerguntaComponent implements OnInit {
       },
       (error) => {
         Swal.fire('Erro', 'Erro ao salvar a pergunta na base de dados', 'error');
+        console.log(error);
+      }
+    );
+  }
+
+  // Este método verifica se o número atual de perguntas excede o limite definido pelo administrador.
+  verificarLimitePerguntas() {
+    this.perguntaService.contarPerguntas(this.exameId).subscribe(
+      (count) => {
+        if (count >= this.maxPerguntas) {
+          Swal.fire('Limite atingido', 'Não é possível adicionar mais perguntas a este exame.', 'warning');
+          this.router.navigate(['/admin/exames']);
+        }
+      },
+      (error) => {
         console.log(error);
       }
     );
