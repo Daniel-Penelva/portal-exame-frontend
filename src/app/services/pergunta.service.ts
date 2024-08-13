@@ -24,4 +24,9 @@ export class PerguntaService {
   public contarPerguntas(exameId: any): Observable<number> {
     return this.http.get<number>(`${baserUrl}/pergunta/exame/contar/${exameId}`);
   }
+
+  // método para deletar por id pergunta do exame - lembrando que esse método é do tipo Observable
+  public deletarPergunta(perguntaId: any){
+    return this.http.delete(`${baserUrl}/pergunta/${perguntaId}`)
+  }
 }
