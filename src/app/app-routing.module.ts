@@ -16,6 +16,7 @@ import { AddExameComponent } from './pages/admin/add-exame/add-exame.component';
 import { AtualizarExameComponent } from './pages/admin/atualizar-exame/atualizar-exame.component';
 import { ViewExamePerguntasComponent } from './pages/admin/view-exame-perguntas/view-exame-perguntas.component';
 import { AddPerguntaComponent } from './pages/admin/add-pergunta/add-pergunta.component';
+import { AtualizarPerguntaComponent } from './pages/admin/atualizar-pergunta/atualizar-pergunta.component';
 
 const routes: Routes = [
   { 
@@ -47,7 +48,8 @@ const routes: Routes = [
       {path: 'exame/:exameId', component: AtualizarExameComponent},
       {path: 'ver-perguntas/:exameId/:titulo', component: ViewExamePerguntasComponent},
       {path: 'add-pergunta/:exameId/:titulo', component: AddPerguntaComponent},
-      {path: 'add-pergunta/:exameId', component: AddPerguntaComponent}
+      {path: 'add-pergunta/:exameId', component: AddPerguntaComponent},
+      {path: 'pergunta/:perguntaId', component: AtualizarPerguntaComponent}
     ]
   },
   {
