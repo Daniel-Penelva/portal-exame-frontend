@@ -34,4 +34,9 @@ export class PerguntaService {
   public atualizarPergunta(pergunta: any){
     return this.http.put(`${baserUrl}/pergunta/`, pergunta);
   }
+
+  // método para obter pergunta por id de uma pergunta do exame - lembrando que esse método é do tipo Observable
+  public obterPerguntaPorId(perguntaId: any){
+    return this.http.get(`${baserUrl}/pergunta/${perguntaId}`);
+  }
 }
