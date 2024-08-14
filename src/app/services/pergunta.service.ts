@@ -29,4 +29,9 @@ export class PerguntaService {
   public deletarPergunta(perguntaId: any){
     return this.http.delete(`${baserUrl}/pergunta/${perguntaId}`)
   }
+
+  // método para atualizar por id uma pergunta do exame - lembrando que esse método é do tipo Observable
+  public atualizarPergunta(pergunta: any){
+    return this.http.put(`${baserUrl}/pergunta/`, pergunta);
+  }
 }
