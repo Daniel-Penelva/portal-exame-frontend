@@ -33,6 +33,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { AtualizarExameComponent } from './pages/admin/atualizar-exame/atualizar-exame.component';
 import { ViewExamePerguntasComponent } from './pages/admin/view-exame-perguntas/view-exame-perguntas.component';
 import { AddPerguntaComponent } from './pages/admin/add-pergunta/add-pergunta.component';
+import { AtualizarPerguntaComponent } from './pages/admin/atualizar-pergunta/atualizar-pergunta.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { AddPerguntaComponent } from './pages/admin/add-pergunta/add-pergunta.co
     AddExameComponent,
     AtualizarExameComponent,
     ViewExamePerguntasComponent,
-    AddPerguntaComponent
+    AddPerguntaComponent,
+    AtualizarPerguntaComponent
   ],
   imports: [
     BrowserModule,
