@@ -34,6 +34,7 @@ import { AtualizarExameComponent } from './pages/admin/atualizar-exame/atualizar
 import { ViewExamePerguntasComponent } from './pages/admin/view-exame-perguntas/view-exame-perguntas.component';
 import { AddPerguntaComponent } from './pages/admin/add-pergunta/add-pergunta.component';
 import { AtualizarPerguntaComponent } from './pages/admin/atualizar-pergunta/atualizar-pergunta.component';
+import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { AtualizarPerguntaComponent } from './pages/admin/atualizar-pergunta/atu
     AtualizarExameComponent,
     ViewExamePerguntasComponent,
     AddPerguntaComponent,
-    AtualizarPerguntaComponent
+    AtualizarPerguntaComponent,
+    SidebarUserComponent
   ],
   imports: [
     BrowserModule,
