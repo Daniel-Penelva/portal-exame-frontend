@@ -35,6 +35,7 @@ import { ViewExamePerguntasComponent } from './pages/admin/view-exame-perguntas/
 import { AddPerguntaComponent } from './pages/admin/add-pergunta/add-pergunta.component';
 import { AtualizarPerguntaComponent } from './pages/admin/atualizar-pergunta/atualizar-pergunta.component';
 import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.component';
+import { LoadExameComponent } from './pages/user/load-exame/load-exame.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.com
     ViewExamePerguntasComponent,
     AddPerguntaComponent,
     AtualizarPerguntaComponent,
-    SidebarUserComponent
+    SidebarUserComponent,
+    LoadExameComponent
   ],
   imports: [
     BrowserModule,
