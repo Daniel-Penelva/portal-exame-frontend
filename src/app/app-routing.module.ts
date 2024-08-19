@@ -59,7 +59,7 @@ const routes: Routes = [
     pathMatch: 'full', 
     canActivate:[UserGuard], 
     children:[
-      {path: 'catId', component: LoadExameComponent}
+      {path: ':catId', component: LoadExameComponent}
     ]
   }
 ];
