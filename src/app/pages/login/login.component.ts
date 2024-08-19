@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit{
 
         }else if(this.loginService.getUserRole() == "USER"){              // obtêm o role "USER" do usuário para acessar a página dashboard user
           //window.location.href = '/user-dashboard';
-          this.router.navigate(['user-dashboard']);
+          this.router.navigate(['user-dashboard/0']);
           this.loginService.loginStatusSubject.next(true);
 
         }else{

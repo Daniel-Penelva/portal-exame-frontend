@@ -56,7 +56,6 @@ const routes: Routes = [
   {
     path: 'user-dashboard', 
     component: UserDashboardComponent, 
-    pathMatch: 'full', 
     canActivate:[UserGuard], 
     children:[
       {path: ':catId', component: LoadExameComponent}
