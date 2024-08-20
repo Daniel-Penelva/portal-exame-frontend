@@ -18,6 +18,7 @@ import { ViewExamePerguntasComponent } from './pages/admin/view-exame-perguntas/
 import { AddPerguntaComponent } from './pages/admin/add-pergunta/add-pergunta.component';
 import { AtualizarPerguntaComponent } from './pages/admin/atualizar-pergunta/atualizar-pergunta.component';
 import { LoadExameComponent } from './pages/user/load-exame/load-exame.component';
+import { InstrucaoComponent } from './pages/user/instrucao/instrucao.component';
 
 const routes: Routes = [
   { 
@@ -58,7 +59,8 @@ const routes: Routes = [
     component: UserDashboardComponent, 
     canActivate:[UserGuard], 
     children:[
-      {path: ':catId', component: LoadExameComponent}
+      {path: ':catId', component: LoadExameComponent},
+      {path: 'instrucoes/:exameId', component: InstrucaoComponent}
     ]
   }
 ];

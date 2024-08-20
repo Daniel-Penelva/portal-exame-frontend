@@ -14,7 +14,7 @@
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-button color="primary">Visualizar</button>
-                        <button mat-button color="accent">Começar</button>
+                        <button mat-button color="accent" [routerLink]="'/user-dashboard/instrucoes/'+e.exameId">Começar</button>
                         <button mat-button color="accent">Perguntas: {{ e.numeroDePerguntas }}</button>
                         <button mat-button color="accent">Ponto Máximo: {{ e.pontosMaximos }}</button>
                     </mat-card-actions>
