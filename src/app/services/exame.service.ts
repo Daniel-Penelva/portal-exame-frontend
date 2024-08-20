@@ -33,4 +33,9 @@ export class ExameService {
   public atualizarQuestionario(exame: any){
     return this.http.post(`${baserUrl}/exame/`, exame);
   }
+
+  // método para listar questionário (ou exame) por categoria - lembrando que esse método é do tipo Observable
+  public listarQuestionarioDeUmaCategoria(categoriaId: any){
+    return this.http.get(`${baserUrl}/exame/categoria/${categoriaId}`);
+  }
 }
