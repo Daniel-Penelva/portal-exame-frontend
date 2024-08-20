@@ -21,7 +21,7 @@ export class LoadExameComponent implements OnInit {
 
       if (this.catId == 0) {
         console.log('Carregando todos os exames');
-        this.exameService.listarQuestionarios().subscribe(
+        this.exameService.obterExamesAtivos().subscribe(
           (data) => {
             this.exames = data;
             console.log(this.exames);
@@ -30,7 +30,7 @@ export class LoadExameComponent implements OnInit {
         })
       } else {
         console.log('Carregando um exame em específico');
-        this.exameService.listarQuestionarioDeUmaCategoria(this.catId).subscribe(
+        this.exameService.obterExamesAtivosDeUmaCategoria(this.catId).subscribe(
           (data: any) => {
             this.exames = data;
             console.log(this.exames);
