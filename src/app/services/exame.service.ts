@@ -43,4 +43,10 @@ export class ExameService {
   public obterExamesAtivos(){
     return this.http.get(`${baserUrl}/exame/ativo`);
   }
+
+  // método para buscar questionário (ou exame) ativos de uma categoria - lembrando que esse método é do tipo Observable
+  public obterExamesAtivosDeUmaCategoria(categoriaId: any){
+    return this.http.get(`${baserUrl}/exame/categoria/ativo/${categoriaId}`)
+  }
+  
 }
