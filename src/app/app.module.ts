@@ -37,6 +37,7 @@ import { AtualizarPerguntaComponent } from './pages/admin/atualizar-pergunta/atu
 import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.component';
 import { LoadExameComponent } from './pages/user/load-exame/load-exame.component';
 import { InstrucaoComponent } from './pages/user/instrucao/instrucao.component';
+import { StartComponent } from './pages/user/start/start.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { InstrucaoComponent } from './pages/user/instrucao/instrucao.component';
     AtualizarPerguntaComponent,
     SidebarUserComponent,
     LoadExameComponent,
-    InstrucaoComponent
+    InstrucaoComponent,
+    StartComponent
   ],
   imports: [
     BrowserModule,
