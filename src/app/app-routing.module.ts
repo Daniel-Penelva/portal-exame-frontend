@@ -19,6 +19,8 @@ import { AddPerguntaComponent } from './pages/admin/add-pergunta/add-pergunta.co
 import { AtualizarPerguntaComponent } from './pages/admin/atualizar-pergunta/atualizar-pergunta.component';
 import { LoadExameComponent } from './pages/user/load-exame/load-exame.component';
 import { InstrucaoComponent } from './pages/user/instrucao/instrucao.component';
+import { StartComponent } from './pages/user/start/start.component';
+import { NormalGuard } from './services/normal.guard';
 
 const routes: Routes = [
   { 
@@ -62,6 +64,11 @@ const routes: Routes = [
       {path: ':catId', component: LoadExameComponent},
       {path: 'instrucoes/:exameId', component: InstrucaoComponent}
     ]
+  },
+  { // Rota para usuários com o papel USER
+    path: 'start/:exameId',
+    component: StartComponent,
+    canActivate:[UserGuard]
   }
 ];
 
