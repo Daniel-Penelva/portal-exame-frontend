@@ -39,4 +39,10 @@ export class PerguntaService {
   public obterPerguntaPorId(perguntaId: any){
     return this.http.get(`${baserUrl}/pergunta/${perguntaId}`);
   }
+
+  // método para listar todas as perguntas do exame para a prova - lembrando que esse método é do tipo Observable
+  public listarPerguntaDoExameParaProva(exameId: any){
+    return this.http.get(`${baserUrl}/pergunta/exame/todos/${exameId}`);
+  }
+
 }
