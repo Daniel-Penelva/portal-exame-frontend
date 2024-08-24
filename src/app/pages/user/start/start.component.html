@@ -1,1 +1,54 @@
-<p>start works!</p>
+<div class="bootstrap-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <mat-card style="margin-top: 70px;">
+                    <mat-card-content>
+                        <h3><b>Instruções</b></h3>
+                        <ul>
+                            <li>Não atualize a página, caso contrário você receberá novas perguntas neste questionário</li>
+                            <li>Não altere as guias</li>
+                            <li>Não minimize a janela</li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col-md-7">
+                <ng-container *ngIf="perguntas">
+                    <h1 class="mt20"> O curso <b>{{ perguntas[0].exame.titulo }}</b></h1>
+                </ng-container>
+
+                <mat-card *ngFor="let p of perguntas; let i = index">
+                    <mat-card-content>
+                        <p><b>{{ i+1 }} <span [innerHTML]="p.conteudo">{{ p.opcao1 }}</span></b></p>
+                        <mat-divider></mat-divider>
+                        <div class="row mt20">
+                            <div class="col-md-7 mt20">
+                                <input [(ngModel)] = "p.respostaDada" type="radio" [value]="p.opcao1" name={{i}}>{{ p.opcao1}}
+                            </div>
+                            <div class="col-md-7 mt20">
+                                <input [(ngModel)] = "p.respostaDada" type="radio" [value]="p.opcao2" name={{i}}>{{ p.opcao2}}
+                            </div>
+                            <div class="col-md-7 mt20">
+                                <input [(ngModel)] = "p.respostaDada" type="radio" [value]="p.opcao3" name={{i}}>{{ p.opcao3}}
+                            </div>
+                            <div class="col-md-7 mt20">
+                                <input [(ngModel)] = "p.respostaDada" type="radio" [value]="p.opcao4" name={{i}}>{{ p.opcao4}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6"></div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <div class="container text-center mt20 mb20">
+                    <button mat-raised-button color="primary">Enviar Questionário</button>
+                </div>
+            </div>
+            <div class="col-md2">
+                <!-- Progresso -->             
+            </div>
+        </div>
+    </div>
+</div>
