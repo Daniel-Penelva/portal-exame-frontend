@@ -14,6 +14,10 @@ export class StartComponent implements OnInit{
   exameId: any;
   perguntas: any;
 
+  pontosConseguidos = 0;
+  respostasCorretas = 0;
+  tentativas = 0;
+
   constructor(private locationSt: LocationStrategy, private route: ActivatedRoute, private perguntaService: PerguntaService){}
 
   ngOnInit(): void {
@@ -30,6 +34,11 @@ export class StartComponent implements OnInit{
       (data: any) => {
         console.log(data);
         this.perguntas = data;
+
+        this.perguntas.forEach((p: any) => {
+          p['respostaDada'] = '';
+        })
+        console.log(this.perguntas);
     }, (error) => {
       Swal.fire('Error', 'Erro ao carregar as perguntas da prova', 'error');
     });
