@@ -54,8 +54,8 @@
                         <mat-card-subtitle>O questionário será enviado automaticamente quando o cronômetro chegar a 0:0</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        <h1 class="text-center">Hora formatada (fazer método)</h1>
-                        <mat-spinner mode="determinate" style="margin: auto;" [value]="70"></mat-spinner>   <!-- Angular Material: Para utilizar "mat-spinner" tem que importar o MatProgressSpinnerModule no app.module.ts -->
+                        <h1 class="text-center">{{ obterHoraFormatada() }}</h1>
+                        <mat-spinner mode="determinate" style="margin: auto;" [value]="(timer/(this.perguntas?.length * 2 * 60) * 100)"></mat-spinner>   <!-- Angular Material: Para utilizar "mat-spinner" tem que importar o MatProgressSpinnerModule no app.module.ts -->
                     </mat-card-content>
                 </mat-card>          
             </div>

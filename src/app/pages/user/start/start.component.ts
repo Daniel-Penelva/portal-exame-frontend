@@ -20,6 +20,8 @@ export class StartComponent implements OnInit{
 
   enviado = false;
 
+  timer: any;
+
   constructor(private locationSt: LocationStrategy, private route: ActivatedRoute, private perguntaService: PerguntaService){}
 
   ngOnInit(): void {
@@ -37,10 +39,13 @@ export class StartComponent implements OnInit{
         console.log(data);
         this.perguntas = data;
 
+        this.timer = this.perguntas.length * 2 * 60;
+
         this.perguntas.forEach((p: any) => {
           p['respostaDada'] = '';
         })
         console.log(this.perguntas);
+        this.iniciarTemporizador();
     }, (error) => {
       Swal.fire('Error', 'Erro ao carregar as perguntas da prova', 'error');
     });
@@ -83,6 +88,23 @@ export class StartComponent implements OnInit{
           console.log(this.perguntas);
         }
     })
+  }
+
+  iniciarTemporizador(){
+    let t = window.setInterval(() => {        // O intervalo é armazenado na variável t, que pode ser usada posteriormente para limpar o intervalo.
+      if(this.timer <= 0){                    // Verifica se o temporizador chegou a zero.
+        this.enviarQuestionario();            // Se o temporizador atingir zero, chama o método enviarQuestionario() para enviar o questionário automaticamente.
+        clearInterval(t);                     // Intervalo chegando a zero é limpado o temporizador
+      }else{
+        this.timer --;                        // Se o temporizador ainda não chegou a zero, ele é decrementado em 1 (ou seja, um segundo é subtraído).                       
+      }
+    }, 1000)                                  // Cria um intervalo que executa a função de callback a cada 1 segundo (1000 ms). 
+  }
+
+  obterHoraFormatada(){
+    let mm = Math.floor(this.timer/60);
+    let ss = this.timer - mm * 60;
+    return `${mm} : min : ${ss} seg`;
   }
 
 }

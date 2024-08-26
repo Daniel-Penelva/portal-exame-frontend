@@ -5,4 +5,5 @@ mat-card-header{
 
 mat-card-title{
     font-weight: 700;
+    text-align: center;
 }
