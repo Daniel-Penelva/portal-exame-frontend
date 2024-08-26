@@ -1,4 +1,4 @@
-<div class="bootstrap-wrapper">
+<div class="bootstrap-wrapper" *ngIf = "!enviado">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
@@ -20,7 +20,7 @@
 
                 <mat-card *ngFor="let p of perguntas; let i = index">
                     <mat-card-content>
-                        <p><b>{{ i+1 }} <span [innerHTML]="p.conteudo">{{ p.opcao1 }}</span></b></p>
+                        <p><b>{{ i+1 }} <span [innerHTML]="p.conteudo"></span></b></p>
                         <mat-divider></mat-divider>
                         <div class="row mt20">
                             <div class="col-md-7 mt20">
@@ -43,7 +43,7 @@
                     </mat-card-content>
                 </mat-card>
                 <div class="container text-center mt20 mb20">
-                    <button mat-raised-button color="primary">Enviar Questionário</button>
+                    <button mat-raised-button (click)="enviarQuestionario()" color="primary">Enviar Questionário</button>
                 </div>
             </div>
             <div class="col-md2">

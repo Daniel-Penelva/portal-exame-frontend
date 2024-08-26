@@ -18,6 +18,8 @@ export class StartComponent implements OnInit{
   respostasCorretas = 0;
   tentativas = 0;
 
+  enviado = false;
+
   constructor(private locationSt: LocationStrategy, private route: ActivatedRoute, private perguntaService: PerguntaService){}
 
   ngOnInit(): void {
@@ -51,6 +53,35 @@ export class StartComponent implements OnInit{
     this.locationSt.onPopState(
       () => {
         history.pushState(null, null!, location.href);
+    })
+  }
+
+  enviarQuestionario(){
+    Swal.fire({
+      title: 'Quer enviar o questionário?',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Enviar',
+      icon: 'info'
+    }).then(
+      (e) => {
+        if(e.isConfirmed){
+          
+          this.tentativas ++;                           // Incrementa a tentativa
+          this.enviado = true;
+
+          this.perguntas.forEach((p: any) => {
+              if(p.respostaDada == p.resposta){         // Verifica se a resposta dada é a correta
+                this.respostasCorretas ++;
+                let pontos = this.perguntas[0].exame.pontosMaximos/this.perguntas.length;
+                this.pontosConseguidos += pontos;
+              }                 
+          });
+          console.log("Respostas Corretas: " + this.respostasCorretas);
+          console.log("Pontos conseguidos: " + this.pontosConseguidos);
+          console.log("Tentativas: " + this.tentativas);
+          console.log(this.perguntas);
+        }
     })
   }
 
