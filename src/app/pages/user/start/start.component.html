@@ -46,8 +46,18 @@
                     <button mat-raised-button (click)="enviarQuestionario()" color="primary">Enviar Questionário</button>
                 </div>
             </div>
-            <div class="col-md2">
-                <!-- Progresso -->             
+            <div class="col-md3">
+                <!-- Progresso -->
+                <mat-card style="margin-top:70px;">
+                    <mat-card-header>
+                        <mat-card-title>Temporizador</mat-card-title>
+                        <mat-card-subtitle>O questionário será enviado automaticamente quando o cronômetro chegar a 0:0</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <h1 class="text-center">Hora formatada (fazer método)</h1>
+                        <mat-spinner mode="determinate" style="margin: auto;" [value]="70"></mat-spinner>   <!-- Angular Material: Para utilizar "mat-spinner" tem que importar o MatProgressSpinnerModule no app.module.ts -->
+                    </mat-card-content>
+                </mat-card>          
             </div>
         </div>
     </div>

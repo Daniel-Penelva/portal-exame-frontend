@@ -38,6 +38,7 @@ import { SidebarUserComponent } from './pages/user/sidebar-user/sidebar-user.com
 import { LoadExameComponent } from './pages/user/load-exame/load-exame.component';
 import { InstrucaoComponent } from './pages/user/instrucao/instrucao.component';
 import { StartComponent } from './pages/user/start/start.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { StartComponent } from './pages/user/start/start.component';
     MatIconModule,
     MatListModule,
     MatSlideToggleModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     provideAnimationsAsync(),
