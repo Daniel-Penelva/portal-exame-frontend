@@ -1,0 +1,8 @@
+mat-card-header{
+    display: flex;
+    justify-content: center;
+}
+
+mat-card-title{
+    font-weight: 700;
+}

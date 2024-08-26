@@ -14,7 +14,7 @@
                 </mat-card>
             </div>
             <div class="col-md-7">
-                <ng-container *ngIf="perguntas">
+                <ng-container *ngIf= "perguntas">
                     <h1 class="mt20"> O curso <b>{{ perguntas[0].exame.titulo }}</b></h1>
                 </ng-container>
 
@@ -49,6 +49,27 @@
             <div class="col-md2">
                 <!-- Progresso -->             
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Este bloco só irá ser visualizado na tela no momento que o usuário enviar o questionário - de acordo com o condicionante "enviado" -->
+<div class="bootstrap-wrapper" *ngIf = "enviado">
+    <div class="container mt20">
+        <div class="col-md-6 offset-md-3">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Resultado da prova</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="text-center">
+                    <h1>Pontos Conseguidos: {{ pontosConseguidos }}</h1>
+                    <h2>Respostas Corretas: {{ respostasCorretas }}</h2>
+                </mat-card-content>
+                <div class="container text-center mt20 mb20">
+                    <button mat-raised-button color="primary" style="margin-right: 5px;">Imprimir</button>
+                    <button mat-raised-button color="accent" [routerLink] = "'/user-dashboard/0'">Inicio</button>
+                </div>
+            </mat-card>
         </div>
     </div>
 </div>
