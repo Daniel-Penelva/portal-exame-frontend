@@ -45,4 +45,9 @@ export class PerguntaService {
     return this.http.get(`${baserUrl}/pergunta/exame/todos/${exameId}`);
   }
 
+  // método é para enviar as respostas de um exame - lembrando que esse método é do tipo Observable
+  public avaliarExame(perguntas: any){
+    return this.http.post(`${baserUrl}/pergunta/avaliar-exame`, perguntas);
+  }
+
 }
