@@ -70,30 +70,35 @@ export class StartComponent implements OnInit{
       icon: 'info'
     }).then(
       (e) => {
-        if(e.isConfirmed){
-          
-          this.tentativas ++;                           // Incrementa a tentativa
-          this.enviado = true;
-
-          this.perguntas.forEach((p: any) => {
-              if(p.respostaDada == p.resposta){         // Verifica se a resposta dada é a correta
-                this.respostasCorretas ++;
-                let pontos = this.perguntas[0].exame.pontosMaximos/this.perguntas.length;
-                this.pontosConseguidos += pontos;
-              }                 
-          });
-          console.log("Respostas Corretas: " + this.respostasCorretas);
-          console.log("Pontos conseguidos: " + this.pontosConseguidos);
-          console.log("Tentativas: " + this.tentativas);
-          console.log(this.perguntas);
+        if(e.isConfirmed){  
+          this.tentativas ++;                                  // Incrementa a tentativa
+          this.avaliarExame();
         }
-    })
+    });
   }
 
+  avaliarExame(){
+    this.enviado = true;
+
+    this.perguntas.forEach((p: any) => {
+      if(p.respostaDada == p.resposta){         // Verifica se a resposta dada é a correta
+        this.respostasCorretas ++;
+        let pontos = this.perguntas[0].exame.pontosMaximos/this.perguntas.length;
+        this.pontosConseguidos += pontos;
+      }                 
+    });
+    console.log("Respostas Corretas: " + this.respostasCorretas);
+    console.log("Pontos conseguidos: " + this.pontosConseguidos);
+    console.log("Tentativas: " + this.tentativas);
+    console.log(this.perguntas);
+  }
+
+
+  // Este método mantém o controle do tempo e aciona o envio do questionário quando o tempo acaba.
   iniciarTemporizador(){
     let t = window.setInterval(() => {        // O intervalo é armazenado na variável t, que pode ser usada posteriormente para limpar o intervalo.
       if(this.timer <= 0){                    // Verifica se o temporizador chegou a zero.
-        this.enviarQuestionario();            // Se o temporizador atingir zero, chama o método enviarQuestionario() para enviar o questionário automaticamente.
+        this.avaliarExame();                  // Se o temporizador atingir zero, chama o método avaliarExame() para avaliar o questionário automaticamente.
         clearInterval(t);                     // Intervalo chegando a zero é limpado o temporizador
       }else{
         this.timer --;                        // Se o temporizador ainda não chegou a zero, ele é decrementado em 1 (ou seja, um segundo é subtraído).                       
@@ -101,10 +106,12 @@ export class StartComponent implements OnInit{
     }, 1000)                                  // Cria um intervalo que executa a função de callback a cada 1 segundo (1000 ms). 
   }
 
+
+  // Este método transforma o tempo restante em um formato legível para o usuário
   obterHoraFormatada(){
-    let mm = Math.floor(this.timer/60);
-    let ss = this.timer - mm * 60;
-    return `${mm} : min : ${ss} seg`;
+    let mm = Math.floor(this.timer/60);       // Calcula os minutos restantes dividindo o tempo total por 60 e arredondando para baixo com Math.floor().
+    let ss = this.timer - mm * 60;            // Calcula os segundos restantes subtraindo os minutos (convertidos para segundos) do tempo total.
+    return `${mm} : min : ${ss} seg`;         // Retorna a string formatada mostrando os minutos e segundos restantes.
   }
 
 }
