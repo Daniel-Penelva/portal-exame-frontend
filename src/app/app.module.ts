@@ -39,6 +39,7 @@ import { LoadExameComponent } from './pages/user/load-exame/load-exame.component
 import { InstrucaoComponent } from './pages/user/instrucao/instrucao.component';
 import { StartComponent } from './pages/user/start/start.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { NgxUiLoaderModule , NgxUiLoaderHttpModule } from "ngx-ui-loader";
 
 
 @NgModule({
@@ -82,7 +83,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatListModule,
     MatSlideToggleModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule.forRoot({
+      showForeground:true
+    })
   ],
   providers: [
     provideAnimationsAsync(),
