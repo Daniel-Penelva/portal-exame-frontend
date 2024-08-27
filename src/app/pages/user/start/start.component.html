@@ -76,7 +76,7 @@
                     <h2>Respostas Corretas: {{ respostasCorretas }}</h2>
                 </mat-card-content>
                 <div class="container text-center mt20 mb20">
-                    <button mat-raised-button color="primary" style="margin-right: 5px;">Imprimir</button>
+                    <button mat-raised-button color="primary" (click)= "imprimirPagina()" style="margin-right: 5px;">Imprimir</button>
                     <button mat-raised-button color="accent" [routerLink] = "'/user-dashboard/0'">Inicio</button>
                 </div>
             </mat-card>

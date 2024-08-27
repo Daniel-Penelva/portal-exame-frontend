@@ -128,4 +128,9 @@ export class StartComponent implements OnInit{
     return `${mm} : min : ${ss} seg`;         // Retorna a string formatada mostrando os minutos e segundos restantes.
   }
 
+  // Método para imprimir a página do resultado do questionario
+  imprimirPagina(){
+    window.print();
+  }
+
 }
