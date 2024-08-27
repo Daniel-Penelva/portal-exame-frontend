@@ -7,3 +7,7 @@ mat-card-title{
     font-weight: 700;
     text-align: center;
 }
+
+mat-card-subtitle{
+    text-align: center;
+}
