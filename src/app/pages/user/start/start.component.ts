@@ -84,7 +84,7 @@ export class StartComponent implements OnInit{
       if(p.respostaDada == p.resposta){         // Verifica se a resposta dada é a correta
         this.respostasCorretas ++;
         let pontos = this.perguntas[0].exame.pontosMaximos/this.perguntas.length;
-        this.pontosConseguidos += pontos;
+        this.pontosConseguidos += parseFloat(pontos.toFixed(1));                   // Arredonda para uma casa decimal
       }                 
     });
     console.log("Respostas Corretas: " + this.respostasCorretas);
