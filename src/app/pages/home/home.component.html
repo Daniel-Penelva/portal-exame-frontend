@@ -3,7 +3,14 @@
     <div class="row mt20">
       <div class="col-md-6 offset-md-3 text-center">
         <h1>Bem Vindo ao Portal de Exames</h1>
-        <button mat-raised-button color="primary">Iniciar</button>
+
+        <mat-card style="margin: 20px 0;">
+          <mat-card-content>
+            <img src="../../../assets/home.png" alt="home" style="max-width: 100%; height: auto;">
+          </mat-card-content>
+        </mat-card>
+
+        <button mat-raised-button [routerLink]="'/login'" color="primary">Iniciar</button>
       </div>
     </div>
   </div>
