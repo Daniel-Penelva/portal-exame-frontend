@@ -78,19 +78,33 @@ export class StartComponent implements OnInit{
   }
 
   avaliarExame(){
-    this.enviado = true;
-
-    this.perguntas.forEach((p: any) => {
-      if(p.respostaDada == p.resposta){         // Verifica se a resposta dada é a correta
-        this.respostasCorretas ++;
-        let pontos = this.perguntas[0].exame.pontosMaximos/this.perguntas.length;
-        this.pontosConseguidos += parseFloat(pontos.toFixed(1));                   // Arredonda para uma casa decimal
-      }                 
+    // Refatorando
+    this.perguntaService.avaliarExame(this.perguntas).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.pontosConseguidos = parseFloat(data.pontosMaximos.toFixed(1));  // Arredondando para 1 casa decimal
+        this.respostasCorretas = data.respostasCorretas;
+        this.tentativas = data.tentativas;
+        this.enviado = true;
+    }, (error) => {
+      console.log(error);
     });
-    console.log("Respostas Corretas: " + this.respostasCorretas);
-    console.log("Pontos conseguidos: " + this.pontosConseguidos);
-    console.log("Tentativas: " + this.tentativas);
-    console.log(this.perguntas);
+
+  /*
+   * this.enviado = true;
+   *
+   *this.perguntas.forEach((p: any) => {
+   *   if(p.respostaDada == p.resposta){         // Verifica se a resposta dada é a correta
+   *     this.respostasCorretas ++;
+   *     let pontos = this.perguntas[0].exame.pontosMaximos/this.perguntas.length;
+   *    this.pontosConseguidos += parseFloat(pontos.toFixed(1));                   // Arredonda para uma casa decimal
+   *   }                 
+   * });
+   * console.log("Respostas Corretas: " + this.respostasCorretas);
+   * console.log("Pontos conseguidos: " + this.pontosConseguidos);
+   * console.log("Tentativas: " + this.tentativas);
+   * console.log(this.perguntas);
+  */
   }
 
 
