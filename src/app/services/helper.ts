@@ -1,3 +1,5 @@
+import { environment } from "../../environments/environment";
+
 //const baserUrl = 'http://localhost:8080';*/
-const baserUrl = 'https://portal-exame-backend-production.up.railway.app';
+const baserUrl = environment.apiUrl;
 export default baserUrl;
