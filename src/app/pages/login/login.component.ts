@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit{
 
         }else{
           this.loginService.logout();                                     // remove os dados de autenticação e fecha a sessão
+          this.router.navigate(['/login']);
         }
 
       });

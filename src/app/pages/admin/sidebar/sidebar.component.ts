@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,12 +8,14 @@ import { LoginService } from '../../../services/login.service';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit {
-  constructor(public login: LoginService) {}
+  constructor(public login: LoginService, private router: Router) {}
 
   ngOnInit(): void {}
 
   public logout() {
     this.login.logout();
-    window.location.reload();
+    //window.location.reload();
+    this.login.loginStatusSubject.next(false);
+    this.router.navigate(['/login']);  // ou ['/'] o home
   }
 }
